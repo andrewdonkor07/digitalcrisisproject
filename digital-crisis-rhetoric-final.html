@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Digital Crisis Rhetoric — Andrew Donkor</title>
+  <meta name="description" content="A digital humanities project mapping how FEMA and the American Red Cross used X/Twitter and Instagram to communicate during the California Wildfires (2020–2025).">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://api.fontshare.com/v2/css?f[]=zodiak@400,400i,700&f[]=satoshi@400,500,700&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    :root,[data-theme="light"]{
+      --color-bg:#f5f3ee;--color-surface:#f8f7f3;--color-surface-2:#fafaf7;
+      --color-surface-offset:#eeece6;--color-surface-dynamic:#e6e4df;
+      --color-divider:#dbd8d0;--color-border:#ccc9c1;
+      --color-text:#1e1b14;--color-text-muted:#6e6b64;--color-text-faint:#b0ada6;--color-text-inverse:#f5f3ee;
+      --color-primary:#01696f;--color-primary-hover:#0c4e54;--color-primary-light:#e0eceb;
+      --color-amber:#c45d00;--color-amber-light:#f5e6d5;--color-amber-border:rgba(196,93,0,0.2);
+      --color-fema:#8b2525;--color-fema-light:#f5e5e5;--color-fema-muted:rgba(139,37,37,0.7);
+      --color-arc:#1a4f7a;--color-arc-light:#deeaf5;--color-arc-muted:rgba(26,79,122,0.7);
+      --color-ig:#c13584;--color-ig-light:#fce4f3;
+      --color-x:#000000;--color-x-light:#e8e8e8;
+      --radius-sm:.375rem;--radius-md:.5rem;--radius-lg:.75rem;--radius-xl:1rem;--radius-full:9999px;
+      --transition:180ms cubic-bezier(0.16,1,0.3,1);
+      --shadow-sm:0 1px 2px oklch(0.2 0.01 80/0.06);--shadow-md:0 4px 12px oklch(0.2 0.01 80/0.08);--shadow-lg:0 12px 32px oklch(0.2 0.01 80/0.12);
+      --text-xs:clamp(0.75rem,0.7rem + 0.25vw,0.875rem);--text-sm:clamp(0.875rem,0.8rem + 0.35vw,1rem);
+      --text-base:clamp(1rem,0.95rem + 0.25vw,1.125rem);--text-lg:clamp(1.125rem,1rem + 0.75vw,1.5rem);
+      --text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);--text-2xl:clamp(2rem,1.2rem + 2.5vw,3.5rem);--text-3xl:clamp(2.5rem,1rem + 4vw,5rem);
+      --space-1:.25rem;--space-2:.5rem;--space-3:.75rem;--space-4:1rem;--space-5:1.25rem;--space-6:1.5rem;
+      --space-8:2rem;--space-10:2.5rem;--space-12:3rem;--space-16:4rem;--space-20:5rem;--space-24:6rem;
+      --content-narrow:640px;--content-default:960px;--content-wide:1160px;
+      --font-display:'Zodiak','Georgia',serif;--font-body:'Satoshi','Inter',sans-serif;
+    }
+    [data-theme="dark"]{
+      --color-bg:#15130f;--color-surface:#1a1812;--color-surface-2:#1f1d15;--color-surface-offset:#222016;
+      --color-surface-dynamic:#2a2820;--color-divider:#2c2a22;--color-border:#37352b;
+      --color-text:#cbc9c2;--color-text-muted:#7a7870;--color-text-faint:#56544e;--color-text-inverse:#1a1812;
+      --color-primary:#4fa3a8;--color-primary-hover:#2e8a8f;--color-primary-light:#1f3232;
+      --color-amber:#e08030;--color-amber-light:#2e1f0f;--color-amber-border:rgba(224,128,48,0.25);
+      --color-fema:#d06060;--color-fema-light:#2a1515;--color-fema-muted:rgba(208,96,96,0.7);
+      --color-arc:#5a9cd4;--color-arc-light:#152030;--color-arc-muted:rgba(90,156,212,0.7);
+      --color-ig:#e06ba0;--color-ig-light:#2a1020;
+      --color-x:#e0e0e0;--color-x-light:#1e1e1e;
+      --shadow-sm:0 1px 2px oklch(0 0 0/0.2);--shadow-md:0 4px 12px oklch(0 0 0/0.3);--shadow-lg:0 12px 32px oklch(0 0 0/0.4);
+    }
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+    html{-webkit-font-smoothing:antialiased;scroll-behavior:smooth;scroll-padding-top:4.5rem}
+    body{min-height:100dvh;line-height:1.65;font-family:var(--font-body);font-size:var(--text-base);color:var(--color-text);background:var(--color-bg);transition:background var(--transition),color var(--transition)}
+    img{display:block;max-width:100%;height:auto;background:var(--color-surface-offset)}
+    h1,h2,h3,h4{text-wrap:balance;line-height:1.15;font-family:var(--font-display)}
+    p,li{text-wrap:pretty}
+    button{cursor:pointer;background:none;border:none;font:inherit;color:inherit}
+    a{color:var(--color-primary);text-decoration:none;transition:color var(--transition)}
+    a:hover{color:var(--color-primary-hover)}
+    ::selection{background:oklch(from var(--color-primary) l c h/0.2)}
+    :focus-visible{outline:2px solid var(--color-primary);outline-offset:3px;border-radius:var(--radius-sm)}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+    .container{max-width:var(--content-default);margin-inline:auto;padding-inline:var(--space-6)}
+    .container--wide{max-width:var(--content-wide);margin-inline:auto;padding-inline:var(--space-6)}
+    .container--narrow{max-width:var(--content-narrow);margin-inline:auto;padding-inline:var(--space-6)}
+
+    /* NAV */
+    .site-nav{position:sticky;top:0;z-index:100;background:oklch(from var(--color-bg) l c h/0.94);backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);border-bottom:1px solid oklch(from var(--color-text) l c h/0.08);transition:box-shadow var(--transition)}
+    .site-nav.scrolled{box-shadow:var(--shadow-sm)}
+    .nav-inner{display:flex;align-items:center;justify-content:space-between;padding-block:var(--space-3)}
+    .nav-logo{display:flex;align-items:center;gap:var(--space-2);font-family:var(--font-display);font-size:var(--text-sm);font-weight:700;color:var(--color-text);letter-spacing:-.01em;white-space:nowrap}
+    .nav-logo svg{color:var(--color-primary);flex-shrink:0}
+    .nav-links{display:flex;align-items:center;gap:var(--space-5);list-style:none}
+    .nav-links a{font-size:var(--text-xs);font-weight:600;letter-spacing:.03em;color:var(--color-text-muted);transition:color var(--transition)}
+    .nav-links a:hover,.nav-links a.active{color:var(--color-text)}
+    .nav-actions{display:flex;align-items:center;gap:var(--space-2)}
+    .theme-btn{display:flex;align-items:center;justify-content:center;width:36px;height:36px;border-radius:var(--radius-full);color:var(--color-text-muted);transition:color var(--transition),background var(--transition)}
+    .theme-btn:hover{color:var(--color-text);background:var(--color-surface-offset)}
+    .mob-btn{display:none;align-items:center;justify-content:center;width:36px;height:36px;color:var(--color-text-muted)}
+    @media(max-width:900px){.nav-links{display:none}.mob-btn{display:flex}}
+    .nav-links.open{display:flex;flex-direction:column;align-items:flex-start;gap:0;position:absolute;top:100%;left:0;right:0;background:var(--color-surface);border-bottom:1px solid var(--color-divider);padding:var(--space-4) var(--space-6)}
+    .nav-links.open a{padding-block:var(--space-3);width:100%;font-size:var(--text-sm)}
+
+    /* HERO */
+    .hero{position:relative;min-height:88vh;display:grid;place-items:center;overflow:hidden}
+    .hero-bg{position:absolute;inset:0;background-image:url('https://user-gen-media-assets.s3.amazonaws.com/gemini_images/855f247c-c759-475a-bc5d-4ced92a8970d.png');background-size:cover;background-position:center;filter:brightness(.32) saturate(.85)}
+    .hero-content{position:relative;z-index:2;text-align:center;padding:var(--space-16) var(--space-6);max-width:840px}
+    .hero-eyebrow{display:inline-flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--color-amber);border:1px solid var(--color-amber-border);background:oklch(from var(--color-amber) l c h/0.1);padding:var(--space-1) var(--space-4);border-radius:var(--radius-full);margin-bottom:var(--space-6)}
+    .hero h1{font-size:var(--text-3xl);color:#f2ede3;font-weight:700;letter-spacing:-.02em;line-height:1.08;margin-bottom:var(--space-6)}
+    .hero h1 em{color:var(--color-amber);font-style:italic}
+    .hero-sub{font-size:var(--text-base);color:#c2bdb5;line-height:1.7;max-width:600px;margin-inline:auto;margin-bottom:var(--space-10);font-family:var(--font-body)}
+    .hero-pills{display:flex;align-items:center;justify-content:center;gap:var(--space-4);flex-wrap:wrap}
+    .hero-pill{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-xs);color:#9a958d;letter-spacing:.02em}
+    .hero-scroll{position:absolute;bottom:var(--space-8);left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:var(--space-2);color:#9a958d;font-size:var(--text-xs);letter-spacing:.1em;animation:bob 2.2s ease-in-out infinite}
+    @keyframes bob{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(7px)}}
+
+    /* ABSTRACT */
+    .abstract-wrap{padding-block:clamp(var(--space-16),10vw,var(--space-24));background:var(--color-surface);border-bottom:1px solid var(--color-divider)}
+    .abstract-grid{display:grid;grid-template-columns:240px 1fr;gap:var(--space-16);align-items:start}
+    .abstract-stick{position:sticky;top:5rem}
+    .eyebrow{font-size:var(--text-xs);font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--color-primary);margin-bottom:var(--space-4);display:block}
+    .abstract-stick h2{font-size:var(--text-xl);font-weight:700;line-height:1.2;margin-bottom:var(--space-6)}
+    .toc{list-style:none;display:flex;flex-direction:column}
+    .toc a{display:block;font-size:var(--text-sm);color:var(--color-text-muted);padding:var(--space-2) var(--space-3);border-left:2px solid var(--color-divider);transition:color var(--transition),border-color var(--transition)}
+    .toc a:hover,.toc a.act{color:var(--color-primary);border-left-color:var(--color-primary)}
+    .abstract-body p{font-size:var(--text-base);line-height:1.8;margin-bottom:var(--space-5);max-width:65ch}
+    .abstract-body p:last-child{margin-bottom:0}
+    .rq-block{border-left:3px solid var(--color-primary);padding:var(--space-5) var(--space-6);background:var(--color-primary-light);border-radius:0 var(--radius-md) var(--radius-md) 0;margin-block:var(--space-8);font-family:var(--font-display);font-size:var(--text-lg);font-style:italic;line-height:1.55;color:var(--color-text)}
+    @media(max-width:768px){.abstract-grid{grid-template-columns:1fr}.abstract-stick{position:static}}
+
+    /* SECTIONS */
+    .sec{padding-block:clamp(var(--space-16),10vw,var(--space-24))}
+    .sec-alt{background:var(--color-surface)}
+    .sec-head{margin-bottom:var(--space-12)}
+    .sec-head h2{font-size:var(--text-2xl);font-weight:700;letter-spacing:-.02em;margin-bottom:var(--space-4)}
+    .sec-head p{font-size:var(--text-base);color:var(--color-text-muted);max-width:60ch;line-height:1.7}
+
+    /* KPIs */
+    .kpi-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(190px,100%),1fr));gap:var(--space-4);margin-bottom:var(--space-10)}
+    .kpi{background:var(--color-surface-2);border:1px solid oklch(from var(--color-text) l c h/.07);border-radius:var(--radius-xl);padding:var(--space-6);transition:box-shadow var(--transition),transform var(--transition)}
+    .kpi:hover{box-shadow:var(--shadow-md);transform:translateY(-2px)}
+    .kpi-lbl{font-size:var(--text-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-muted);margin-bottom:var(--space-3)}
+    .kpi-val{font-size:var(--text-2xl);font-family:var(--font-display);font-weight:700;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+    .kpi-note{font-size:var(--text-xs);color:var(--color-text-muted);margin-top:var(--space-2)}
+    .kpi.top-fema{border-top:3px solid var(--color-fema)}
+    .kpi.top-arc{border-top:3px solid var(--color-arc)}
+    .kpi.top-teal{border-top:3px solid var(--color-primary)}
+    .kpi.top-amber{border-top:3px solid var(--color-amber)}
+    .kpi.top-ig{border-top:3px solid var(--color-ig)}
+
+    /* PLATFORM TAB FILTER */
+    .tab-row{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-8)}
+    .tab-btn{font-size:var(--text-sm);font-weight:600;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);color:var(--color-text-muted);border:1px solid var(--color-divider);transition:color var(--transition),background var(--transition),border-color var(--transition)}
+    .tab-btn:hover{color:var(--color-text)}
+    .tab-btn.on{color:var(--color-primary);background:var(--color-primary-light);border-color:oklch(from var(--color-primary) l c h/.25)}
+    .tab-btn.on-ig{color:var(--color-ig);background:var(--color-ig-light);border-color:oklch(from var(--color-ig) l c h/.25)}
+
+    /* CHARTS */
+    .charts-2col{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(360px,100%),1fr));gap:var(--space-8);margin-bottom:var(--space-8)}
+    .chart-card{background:var(--color-surface);border:1px solid oklch(from var(--color-text) l c h/.07);border-radius:var(--radius-xl);padding:var(--space-6);box-shadow:var(--shadow-sm)}
+    .chart-wide{background:var(--color-surface);border:1px solid oklch(from var(--color-text) l c h/.07);border-radius:var(--radius-xl);padding:var(--space-6);box-shadow:var(--shadow-sm);margin-bottom:var(--space-8)}
+    .chart-title{font-size:var(--text-sm);font-weight:700;margin-bottom:var(--space-1)}
+    .chart-sub{font-size:var(--text-xs);color:var(--color-text-muted);margin-bottom:var(--space-5)}
+    .chart-box{position:relative;height:280px}
+    .chart-box-tall{position:relative;height:320px}
+
+    /* PLATFORM BADGES */
+    .plat-badge{display:inline-flex;align-items:center;gap:var(--space-1);font-size:var(--text-xs);font-weight:700;padding:2px var(--space-2);border-radius:var(--radius-full)}
+    .plat-x{background:var(--color-x-light);color:var(--color-x)}
+    .plat-ig{background:var(--color-ig-light);color:var(--color-ig)}
+    .org-badge{display:inline-flex;align-items:center;gap:var(--space-2);padding:var(--space-1) var(--space-3);border-radius:var(--radius-full);font-size:var(--text-xs);font-weight:700;letter-spacing:.06em;text-transform:uppercase}
+    .org-fema{background:var(--color-fema-light);color:var(--color-fema)}
+    .org-arc{background:var(--color-arc-light);color:var(--color-arc)}
+
+    /* POSTS COMPARE */
+    .posts-grid{display:grid;grid-template-columns:1fr 1fr;gap:var(--space-8)}
+    .org-col-head{display:flex;align-items:center;gap:var(--space-3);margin-bottom:var(--space-6);padding-bottom:var(--space-4);border-bottom:1px solid var(--color-divider)}
+    .org-name{font-size:var(--text-lg);font-weight:700;font-family:var(--font-display)}
+    .mock-post{background:var(--color-surface-2);border:1px solid oklch(from var(--color-text) l c h/.08);border-radius:var(--radius-xl);padding:var(--space-5);margin-bottom:var(--space-4);transition:box-shadow var(--transition)}
+    .mock-post:hover{box-shadow:var(--shadow-md)}
+    .post-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:var(--space-4)}
+    .post-id{display:flex;align-items:center;gap:var(--space-3)}
+    .av{width:38px;height:38px;border-radius:var(--radius-full);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:var(--text-sm);flex-shrink:0}
+    .av-fema{background:var(--color-fema-light);color:var(--color-fema)}
+    .av-arc{background:var(--color-arc-light);color:var(--color-arc)}
+    .post-handle strong{display:block;font-size:var(--text-sm);color:var(--color-text)}
+    .post-handle span{font-size:var(--text-xs);color:var(--color-text-muted)}
+    .post-text{font-size:var(--text-sm);line-height:1.65;color:var(--color-text);margin-bottom:var(--space-4)}
+    .post-tag{display:inline-block;font-size:var(--text-xs);font-weight:600;color:var(--color-primary);margin-right:var(--space-1)}
+    .appeals{display:flex;gap:var(--space-2);flex-wrap:wrap;padding-top:var(--space-3);border-top:1px solid var(--color-divider);margin-top:var(--space-3)}
+    .ap{font-size:var(--text-xs);font-weight:600;padding:2px var(--space-2);border-radius:var(--radius-full)}
+    .ap-logos{background:#e0f0fa;color:#1a5a80}[data-theme="dark"] .ap-logos{background:#162535;color:#5a9cd4}
+    .ap-pathos{background:#fce8e8;color:#8a2020}[data-theme="dark"] .ap-pathos{background:#2a1515;color:#d06060}
+    .ap-ethos{background:#e8f5e8;color:#1a5a1a}[data-theme="dark"] .ap-ethos{background:#152015;color:#6daa45}
+    .post-footer{display:flex;align-items:center;justify-content:space-between;margin-top:var(--space-3);padding-top:var(--space-3);border-top:1px solid var(--color-divider)}
+    .post-note{font-size:var(--text-xs);color:var(--color-text-faint);max-width:32ch;line-height:1.4}
+    @media(max-width:680px){.posts-grid{grid-template-columns:1fr}}
+
+    /* FULL BLEED */
+    .full-bleed{width:100%;height:clamp(240px,30vw,440px);object-fit:cover;display:block}
+
+    /* HISTORY TIMELINE */
+    .timeline{margin-top:var(--space-10);position:relative;padding-left:var(--space-8)}
+    .timeline::before{content:'';position:absolute;left:0;top:0;bottom:0;width:2px;background:var(--color-divider)}
+    .tl-item{position:relative;margin-bottom:var(--space-10)}
+    .tl-item::before{content:'';position:absolute;left:calc(-1 * var(--space-8));width:14px;height:14px;border-radius:var(--radius-full);background:var(--color-surface);border:2px solid var(--color-primary);top:4px;transform:translateX(-6px)}
+    .tl-era{font-size:var(--text-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--color-primary);margin-bottom:var(--space-2)}
+    .tl-title{font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)}
+    .tl-text{font-size:var(--text-sm);line-height:1.7;color:var(--color-text-muted);max-width:60ch}
+
+    /* API CALLOUT */
+    .api-box{background:var(--color-amber-light);border:1px solid var(--color-amber-border);border-radius:var(--radius-xl);padding:var(--space-8);margin-top:var(--space-10);display:grid;grid-template-columns:auto 1fr;gap:var(--space-6);align-items:start}
+    .api-box-icon{color:var(--color-amber);margin-top:2px}
+    .api-box h3{font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-3)}
+    .api-box p{font-size:var(--text-sm);line-height:1.7;color:var(--color-text-muted)}
+    .api-box p+p{margin-top:var(--space-3)}
+
+    /* SCHOLARS */
+    .scholar-tabs{display:flex;gap:var(--space-2);flex-wrap:wrap;margin-bottom:var(--space-10);border-bottom:1px solid var(--color-divider);padding-bottom:var(--space-4)}
+    .scholar-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(270px,100%),1fr));gap:var(--space-5)}
+    .scholar-card{background:var(--color-surface);border:1px solid oklch(from var(--color-text) l c h/.07);border-radius:var(--radius-xl);padding:var(--space-6);box-shadow:var(--shadow-sm);opacity:0;transform:translateY(8px);transition:opacity .35s ease,transform .35s ease,box-shadow var(--transition)}
+    .scholar-card.vis{opacity:1;transform:none}
+    .scholar-card:hover{box-shadow:var(--shadow-md)}
+    .sc-field{font-size:var(--text-xs);font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:var(--space-3)}
+    .sc-ds{color:var(--color-primary)}.sc-cc{color:var(--color-fema)}.sc-rh{color:var(--color-amber)}.sc-api{color:var(--color-ig)}
+    .sc-name{font-size:var(--text-lg);font-family:var(--font-display);font-weight:700;margin-bottom:var(--space-1)}
+    .sc-work{font-size:var(--text-sm);color:var(--color-text-muted);font-style:italic;margin-bottom:var(--space-4)}
+    .sc-desc{font-size:var(--text-sm);line-height:1.65;color:var(--color-text)}
+
+    /* METHOD */
+    .method-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr));gap:var(--space-5);margin-top:var(--space-10)}
+    .method-card{background:var(--color-surface-2);border:1px solid oklch(from var(--color-text) l c h/.07);border-radius:var(--radius-xl);padding:var(--space-6)}
+    .method-icon{width:42px;height:42px;border-radius:var(--radius-lg);display:flex;align-items:center;justify-content:center;margin-bottom:var(--space-4);color:var(--color-primary);background:var(--color-primary-light)}
+    .method-title{font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-2)}
+    .method-desc{font-size:var(--text-sm);color:var(--color-text-muted);line-height:1.65}
+    .tools-row{display:flex;flex-wrap:wrap;gap:var(--space-3);margin-top:var(--space-10)}
+    .tool-chip{display:flex;align-items:center;gap:var(--space-2);font-size:var(--text-sm);font-weight:600;padding:var(--space-2) var(--space-4);border-radius:var(--radius-full);border:1px solid oklch(from var(--color-text) l c h/.12);background:var(--color-surface);color:var(--color-text)}
+
+    /* REFERENCES */
+    .refs-sec{padding-block:clamp(var(--space-12),8vw,var(--space-20));background:var(--color-surface)}
+    .ref-list{list-style:none;display:flex;flex-direction:column;gap:var(--space-4)}
+    .ref-item{font-size:var(--text-sm);line-height:1.8;color:var(--color-text-muted);padding-left:var(--space-8);text-indent:calc(-1 * var(--space-8))}
+    .ref-item em{font-style:italic}
+
+    /* FOOTER */
+    .footer{background:var(--color-text);color:var(--color-text-inverse);padding-block:var(--space-10)}
+    .footer-inner{display:flex;align-items:center;justify-content:space-between;gap:var(--space-6);flex-wrap:wrap}
+    .footer-brand{font-family:var(--font-display);font-size:var(--text-base);font-weight:700;opacity:.9}
+    .footer-meta{font-size:var(--text-xs);opacity:.5;line-height:1.8}
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="site-nav" id="sitenav">
+  <div class="container--wide">
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">
+        <svg width="24" height="24" viewBox="0 0 28 28" fill="none" aria-hidden="true">
+          <circle cx="14" cy="14" r="12" stroke="currentColor" stroke-width="1.5"/>
+          <path d="M8 14 Q14 8 20 14 Q14 20 8 14Z" fill="currentColor" opacity="0.15"/>
+          <path d="M8 14 Q14 8 20 14" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <circle cx="14" cy="14" r="2.5" fill="currentColor"/>
+          <path d="M14 4v3M14 21v3M4 14h3M21 14h3" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </svg>
+        Digital Crisis Rhetoric
+      </a>
+      <ul class="nav-links" id="navlinks">
+        <li><a href="#overview" class="active">Overview</a></li>
+        <li><a href="#data">Dataset</a></li>
+        <li><a href="#posts">Posts</a></li>
+        <li><a href="#history">History</a></li>
+        <li><a href="#scholars">Scholars</a></li>
+        <li><a href="#method">Method</a></li>
+        <li><a href="#refs">References</a></li>
+      </ul>
+      <div class="nav-actions">
+        <button class="theme-btn" id="themetgl" data-theme-toggle aria-label="Switch to dark mode">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="mob-btn" id="mobbtn" aria-label="Open menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="overview">
+  <div class="hero-bg" aria-hidden="true"></div>
+  <div class="hero-content">
+    <div class="hero-eyebrow">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      California Wildfires · 2020–2025 · Cross-Platform Study
+    </div>
+    <h1>Digital Bureaucracy,<br><em>Digital Humanitarianism,</em><br>and Platform Publics</h1>
+    <p class="hero-sub">A digital humanities analysis of how FEMA and the American Red Cross deployed crisis rhetoric across X and Instagram — and what platform logics mean for public meaning-making during disaster.</p>
+    <div class="hero-pills">
+      <span class="hero-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>Andrew Donkor</span>
+      <span class="hero-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>MITH610 · Spring 2026</span>
+      <span class="hero-pill"><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>University of Maryland</span>
+      <span class="hero-pill">Dr. Jeffrey Moro</span>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <span>SCROLL</span>
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"/><polyline points="19 12 12 19 5 12"/></svg>
+  </div>
+</section>
+
+<!-- ABSTRACT -->
+<section class="abstract-wrap">
+  <div class="container--wide">
+    <div class="abstract-grid">
+      <aside class="abstract-stick">
+        <span class="eyebrow">Navigation</span>
+        <h2>Project Overview</h2>
+        <ul class="toc" id="toc">
+          <li><a href="#overview" class="act">Introduction</a></li>
+          <li><a href="#data">Dataset &amp; Visualizations</a></li>
+          <li><a href="#posts">Annotated Posts</a></li>
+          <li><a href="#history">Historical Context</a></li>
+          <li><a href="#scholars">Intellectual History</a></li>
+          <li><a href="#method">Methodology</a></li>
+          <li><a href="#refs">References</a></li>
+        </ul>
+      </aside>
+      <div class="abstract-body">
+        <span class="eyebrow">Abstract</span>
+        <p>This digital humanities project examines how the <strong>Federal Emergency Management Agency (FEMA)</strong> and the <strong>American Red Cross (ARC)</strong> communicated on <strong>X (formerly Twitter)</strong> and <strong>Instagram</strong> during the California wildfires from 2020 to 2025. Building on a dataset of 143 posts across both platforms, the project uses qualitative rhetorical analysis, dialogic coding, and DH visualization to surface how organizational identity and platform affordances together shape the possibilities of crisis communication.</p>
+        <div class="rq-block">"How do organizational type and platform logics shape the rhetorical and dialogic possibilities of crisis communication during extended natural disasters — and what does this mean for publics' capacity to participate in meaning-making?"</div>
+        <p>A consistent pattern emerged: FEMA relied on <strong>logos-driven, procedural rhetoric</strong> across both platforms — eligibility criteria, deadlines, application links. ARC used <strong>pathos-driven narrative</strong> — survivor stories, emotional appeals, community identity. These reflect distinct institutional identities that are amplified, constrained, and transformed differently by X's text-threading affordances and Instagram's visual grammar. The project names these modes <em>digital bureaucracy</em> and <em>digital humanitarianism.</em></p>
+        <p>Complicating this analysis is a deeper methodological question that is, as Dr. Moro notes, <em>"upstream"</em> of much of social media studies. The dramatic restriction of API access since 2018 — what Bruns (2019) calls the <em>APIcalypse</em> — has foreclosed the kind of large-scale automated social media research that was common in the 2010s. This project's manually curated dataset is not a workaround but a theoretical position: an argument that close reading, practiced in the DH tradition (Walsh, 2023), is a principled methodology for studying closed-platform discourse. This reframes the smallness of the dataset as an argument about platform power rather than a research limitation.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/89223a87-fd62-4730-aa10-b299c09c559b.png" alt="Split editorial illustration contrasting FEMA bureaucratic digital rhetoric versus ARC humanitarian visual rhetoric across platforms" class="full-bleed" width="1200" height="440" loading="lazy">
+
+<!-- DATASET -->
+<section class="sec" id="data">
+  <div class="container--wide">
+    <div class="sec-head">
+      <span class="eyebrow">Dataset &amp; Visualizations</span>
+      <h2>143 Posts, Two Organizations, Two Platforms</h2>
+      <p>An expanded cross-platform dataset covering X and Instagram posts from FEMA and ARC during major California wildfire events, coded for rhetorical appeals, dialogic features, and platform-specific affordances.</p>
+    </div>
+
+    <!-- Platform filter -->
+    <div class="tab-row">
+      <button class="tab-btn on" data-plat="all">All Platforms</button>
+      <button class="tab-btn" data-plat="x">X (Twitter) Only</button>
+      <button class="tab-btn on-ig" data-plat="ig">Instagram Only</button>
+    </div>
+
+    <div class="kpi-row" id="kpi-row">
+      <div class="kpi top-teal"><div class="kpi-lbl">Total Posts</div><div class="kpi-val" id="kv-total">143</div><div class="kpi-note">X + Instagram · 2020–2025</div></div>
+      <div class="kpi top-fema"><div class="kpi-lbl">FEMA Posts</div><div class="kpi-val" id="kv-fema">73</div><div class="kpi-note" id="kn-fema">X: 41 · Instagram: 32</div></div>
+      <div class="kpi top-arc"><div class="kpi-lbl">ARC Posts</div><div class="kpi-val" id="kv-arc">70</div><div class="kpi-note" id="kn-arc">X: 38 · Instagram: 32</div></div>
+      <div class="kpi top-amber"><div class="kpi-lbl">Coding Categories</div><div class="kpi-val">12</div><div class="kpi-note">Ethos · Pathos · Logos + dialogic</div></div>
+      <div class="kpi top-ig"><div class="kpi-lbl">Platforms Covered</div><div class="kpi-val">2</div><div class="kpi-note">X (text-threading) · Instagram (visual)</div></div>
+    </div>
+
+    <div class="charts-2col">
+      <div class="chart-card"><div class="chart-title">Rhetorical Appeals by Organization</div><div class="chart-sub">% of posts coded for each appeal — <span id="plat-lbl-1">all platforms combined</span></div><div class="chart-box"><canvas id="rhetoricChart"></canvas></div></div>
+      <div class="chart-card"><div class="chart-title">Dialogic Features (Kent &amp; Taylor 2002)</div><div class="chart-sub">% of posts exhibiting each dialogic principle — <span id="plat-lbl-2">all platforms combined</span></div><div class="chart-box"><canvas id="dialogicChart"></canvas></div></div>
+    </div>
+    <div class="chart-wide">
+      <div class="chart-title">Platform Comparison: Rhetorical Emphasis Shift</div>
+      <div class="chart-sub">How X vs. Instagram changes the rhetorical profile of each organization's posts</div>
+      <div class="chart-box-tall"><canvas id="platformChart"></canvas></div>
+    </div>
+    <div class="chart-wide">
+      <div class="chart-title">Posting Activity — California Wildfire Events 2020–2025</div>
+      <div class="chart-sub">Combined FEMA + ARC posting volume by major incident (X + Instagram)</div>
+      <div class="chart-box-tall"><canvas id="timelineChart"></canvas></div>
+    </div>
+  </div>
+</section>
+
+<!-- POSTS -->
+<section class="sec sec-alt" id="posts">
+  <div class="container--wide">
+    <div class="sec-head">
+      <span class="eyebrow">Annotated Sample Posts</span>
+      <h2>Seeing the Rhetoric Across Platforms</h2>
+      <p>Representative posts from each organization on both X and Instagram, annotated for rhetorical appeals and platform affordance. The same event, two organizations, two platforms — the differences are revealing.</p>
+    </div>
+    <div class="posts-grid">
+      <!-- FEMA col -->
+      <div>
+        <div class="org-col-head"><span class="org-badge org-fema">FEMA</span><span class="org-name">Digital Bureaucracy</span></div>
+        <!-- FEMA X -->
+        <div class="mock-post">
+          <div class="post-head">
+            <div class="post-id"><div class="av av-fema">F</div><div class="post-handle"><strong>FEMA</strong><span>@fema</span></div></div>
+            <span class="plat-badge plat-x"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.738l7.732-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X</span>
+          </div>
+          <div class="post-text">If you were affected by the <span class="post-tag">#CaliforniaWildfires</span>, federal disaster assistance may be available. Apply at <span class="post-tag">DisasterAssistance.gov</span> or call 1-800-621-3362. Registration deadline: Jan. 15. <span class="post-tag">#FEMA</span></div>
+          <div class="appeals"><span class="ap ap-logos">Logos</span><span class="ap ap-ethos">Ethos</span></div>
+          <div class="post-footer"><span class="post-note">One-way broadcast. Procedural info only. No dialogue invited.</span></div>
+        </div>
+        <!-- FEMA Instagram -->
+        <div class="mock-post">
+          <div class="post-head">
+            <div class="post-id"><div class="av av-fema">F</div><div class="post-handle"><strong>FEMA</strong><span>@fema</span></div></div>
+            <span class="plat-badge plat-ig"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram</span>
+          </div>
+          <div class="post-text">📋 <strong>WILDFIRE RECOVERY CHECKLIST:</strong><br>✅ Document all damage with photos<br>✅ Keep all receipts<br>✅ Apply within 60 days of disaster declaration<br>✅ Save your registration number<br><br>Swipe for full guide → Link in bio. <span class="post-tag">#FEMA</span> <span class="post-tag">#DisasterAssistance</span></div>
+          <div class="appeals"><span class="ap ap-logos">Logos</span><span class="ap ap-ethos">Ethos</span></div>
+          <div class="post-footer"><span class="post-note">Instagram's carousel used for information delivery, not visual narrative. Caption-heavy despite platform's visual grammar.</span></div>
+        </div>
+      </div>
+      <!-- ARC col -->
+      <div>
+        <div class="org-col-head"><span class="org-badge org-arc">ARC</span><span class="org-name">Digital Humanitarianism</span></div>
+        <!-- ARC X -->
+        <div class="mock-post">
+          <div class="post-head">
+            <div class="post-id"><div class="av av-arc">R</div><div class="post-handle"><strong>American Red Cross</strong><span>@RedCross</span></div></div>
+            <span class="plat-badge plat-x"><svg width="10" height="10" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.738l7.732-8.835L1.254 2.25H8.08l4.253 5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X</span>
+          </div>
+          <div class="post-text">Maria lost everything in the <span class="post-tag">#CaliforniaWildfires</span>. "I didn't know where to turn," she told our volunteers. "Then the Red Cross showed up." Our teams are on the ground — because nobody faces a disaster alone. 🔴❤️ <span class="post-tag">#TogetherWeHeal</span></div>
+          <div class="appeals"><span class="ap ap-pathos">Pathos</span><span class="ap ap-ethos">Ethos</span></div>
+          <div class="post-footer"><span class="post-note">First-person survivor narrative. Emotionally resonant. Platform threading enables replies — and gets them.</span></div>
+        </div>
+        <!-- ARC Instagram -->
+        <div class="mock-post">
+          <div class="post-head">
+            <div class="post-id"><div class="av av-arc">R</div><div class="post-handle"><strong>American Red Cross</strong><span>@redcross</span></div></div>
+            <span class="plat-badge plat-ig"><svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg> Instagram</span>
+          </div>
+          <div class="post-text">Every night since the fires broke out, our volunteers have served thousands of meals, opened emergency shelters, and held the hands of people who've lost everything. 🏠🔥<br><br>This is what community looks like. Swipe to see our teams in action →<br><br><span class="post-tag">#ReadyToHelp</span> <span class="post-tag">#DisasterRelief</span> <span class="post-tag">#RedCross</span></div>
+          <div class="appeals"><span class="ap ap-pathos">Pathos</span></div>
+          <div class="post-footer"><span class="post-note">Instagram's visual grammar fully leveraged: image carousel + emotional caption. Highest engagement of the four posts.</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/129fc593-07c4-4dda-82f3-5e4d55a910a6.png" alt="Abstract network visualization of social media posts across the 2020–2025 wildfire timeline" class="full-bleed" width="1200" height="440" loading="lazy">
+
+<!-- HISTORICAL CONTEXT -->
+<section class="sec" id="history">
+  <div class="container--wide">
+    <div class="sec-head">
+      <span class="eyebrow">Historical Context</span>
+      <h2>Communications Infrastructures Accrete</h2>
+      <p>Following Starosielski (2015), this project situates the 2020–2025 case within two temporal arcs: the deep history of disaster communications infrastructure, and the specific historical conditions of the internet between 2020 and 2025.</p>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-era">Pre-Digital Era · 1900s–1980s</div>
+        <div class="tl-title">Radio, Wire Services, and the Birth of Official Disaster Communication</div>
+        <div class="tl-text">FEMA-equivalent agencies relied on radio broadcasts and wire service press releases for mass public communication during disasters. The one-to-many broadcast model — institutional authority → passive public — was structurally embedded in the medium. Interactivity was impossible by design (Quarantelli, 1988; Mileti, 1999). This is the deep template that institutional disaster communication still partially follows.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-era">Early Internet Era · 1990s–2000s</div>
+        <div class="tl-title">Static Web and Email: A One-Way Web, Slightly Wider</div>
+        <div class="tl-text">The rise of organizational websites and email listservs expanded institutional reach without fundamentally altering the broadcast model. FEMA's 2001 post-9/11 web presence and early Red Cross donation pages mark this transition. Infrastructure (Starosielski, 2015) — servers, bandwidth, domain registrations — accretes historically along the same institutional tracks as radio and wire networks.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-era">Open Social Media Era · 2009–2018</div>
+        <div class="tl-title">Twitter, Open APIs, and the First Wave of Social Crisis Communication</div>
+        <div class="tl-text">Twitter's open API (launched 2006, matured ~2009) enabled scholars to collect large datasets and study crisis communication at scale. This period produced the SMCC model (Austin et al., 2012, 2017) and most of the empirical base for crisis communication on social media. Crises like Hurricane Sandy (2012) and the Boston Marathon bombing (2013) became scholarly case studies. Organizations like FEMA and ARC built social media communication teams. The "open" era of social media research flourished — and lasted barely a decade.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-era">COVID-19 Interregnum · 2020–2022</div>
+        <div class="tl-title">Pandemic Temporality Meets Wildfire Temporality on the Same Feeds</div>
+        <div class="tl-text">The 2020–2025 wildfire years cannot be understood apart from COVID-19. As Dr. Moro's feedback notes, lockdowns accelerated internet use and transformed how publics conceptualized disaster. The slow-moving, constitutive temporality of the pandemic — omnipresent, chronic, invisible — intermingled on social media with the localized burst temporality of wildfires: sudden, visible, geographic. FEMA and ARC navigated this double-disaster context simultaneously. Social media platforms, particularly X and Instagram, became primary channels of disaster information for the first time for many users.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-era">Platform Transformation · 2022–2025</div>
+        <div class="tl-title">Elon Musk, API Closures, and the End of the Open Social Web</div>
+        <div class="tl-text">Elon Musk's acquisition of Twitter (October 2022) and its rebranding as X dramatically altered the platform's structure, content moderation, verification systems, and — crucially for research — API access. The 2023 API pricing changes made automated data collection economically and practically impossible for most academic researchers (Freelon, 2018; Bruns, 2019). Instagram's simultaneous tightening of its own API access meant that by 2023–2025, the "social media of 2020" was structurally different from the "social media of 2025." The posts in this dataset were produced in radically different platform environments depending on their year.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-era">Present Condition · Post-APIcalypse</div>
+        <div class="tl-title">Manual Curation as Disciplinary Response</div>
+        <div class="tl-text">This project's dataset was assembled through deliberate manual curation of publicly available posts. This is not a limitation — it is a methodological contribution. Following Bruns (2019), Freelon (2018), and Walsh (2023), the closure of social media APIs is itself the primary object of study: platform black-boxing (Chun, 2011; Gillespie, 2014) as it affects an entire discipline's analytical capacity. Close reading of a small, carefully selected corpus is the DH tradition (Drucker, 2012) and the appropriate response to the post-API condition.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SCHOLARS -->
+<section class="sec sec-alt" id="scholars">
+  <div class="container--wide">
+    <div class="sec-head">
+      <span class="eyebrow">Intellectual History</span>
+      <h2>Major Thinkers &amp; Conversations</h2>
+      <p>Four overlapping scholarly fields ground this project. Filter by field to trace the intellectual conversations this research enters.</p>
+    </div>
+    <div class="scholar-tabs">
+      <button class="tab-btn on" data-sc="all">All Scholars</button>
+      <button class="tab-btn" data-sc="ds">Digital Studies</button>
+      <button class="tab-btn" data-sc="api">Post-API Methods</button>
+      <button class="tab-btn" data-sc="cc">Crisis Communication</button>
+      <button class="tab-btn" data-sc="rh">Rhetorical Theory</button>
+    </div>
+    <div class="scholar-grid" id="scholar-grid">
+      <div class="scholar-card vis" data-sc="ds"><div class="sc-field sc-ds">Digital Studies</div><div class="sc-name">Johanna Drucker</div><div class="sc-work">SpecLab (2009); Debates in DH (2012)</div><div class="sc-desc">Digital tools encode interpretive assumptions — no interface is a neutral window. Speculative computing makes interpretation visible rather than claiming objectivity. Grounds the visualization choices in this project.</div></div>
+      <div class="scholar-card vis" data-sc="ds"><div class="sc-field sc-ds">Digital Studies</div><div class="sc-name">Wendy Hui Kyong Chun</div><div class="sc-work">Programmed Visions (2011)</div><div class="sc-desc">Software appears transparent while hiding institutional decisions. Platform "programmed visions" shape crisis discourse — including which organizational posts are amplified and which are deprioritized.</div></div>
+      <div class="scholar-card vis" data-sc="ds"><div class="sc-field sc-ds">Digital Studies</div><div class="sc-name">Tarleton Gillespie</div><div class="sc-work">Media Technologies (2014)</div><div class="sc-desc">Platform algorithms are editorial forces. X's content amplification and Instagram's visual-ranking algorithms function as political choices about whose crisis communication is "relevant."</div></div>
+      <div class="scholar-card vis" data-sc="ds"><div class="sc-field sc-ds">Digital Studies</div><div class="sc-name">Nicole Starosielski</div><div class="sc-work">The Undersea Network (2015)</div><div class="sc-desc">Communications infrastructures accrete materially and historically — subsea cables track telegraph lines, which track trade winds. Platform infrastructures carry the weight of earlier broadcast networks.</div></div>
+      <div class="scholar-card vis" data-sc="ds"><div class="sc-field sc-ds">Digital Studies</div><div class="sc-name">D'Ignazio &amp; Klein</div><div class="sc-work">Data Feminism (2020)</div><div class="sc-desc">Power and inequality are built into how data are collected and visualized. Feminist data ethics demands reflexivity about what platforms make visible and what they hide — directly informing how this project presents its charts.</div></div>
+      <div class="scholar-card vis" data-sc="ds"><div class="sc-field sc-ds">Digital Studies</div><div class="sc-name">Melanie Walsh</div><div class="sc-work">Debates in DH 2023</div><div class="sc-desc">Examines ethical challenges of social media data in DH research. Advocates for community-engaged, reflexive approaches — and directly supports the close-reading methodology used here.</div></div>
+      <div class="scholar-card vis" data-sc="api"><div class="sc-field sc-api">Post-API Methods</div><div class="sc-name">Axel Bruns</div><div class="sc-work">Information, Communication &amp; Society (2019)</div><div class="sc-desc">Coins the "APIcalypse" — the post-Cambridge Analytica closure of social media APIs. This is not merely a methodological inconvenience; it is a platform power move that black-boxes how institutions communicate with publics.</div></div>
+      <div class="scholar-card vis" data-sc="api"><div class="sc-field sc-api">Post-API Methods</div><div class="sc-name">Deen Freelon</div><div class="sc-work">Political Communication (2018)</div><div class="sc-desc">Coined "the post-API age" to describe the epochal shift in social media research access. Argues this requires disciplinary rethinking, not workarounds — exactly the "conceptual step back" Dr. Moro advocates.</div></div>
+      <div class="scholar-card vis" data-sc="api"><div class="sc-field sc-api">Post-API Methods</div><div class="sc-name">Lomborg &amp; Bechmann</div><div class="sc-work">Journal of Information Technology &amp; Politics (2014)</div><div class="sc-desc">Using APIs in social media research: methodological considerations and ethical questions. Among the first to theorize both the affordances and the limits of API-based social media research.</div></div>
+      <div class="scholar-card vis" data-sc="cc"><div class="sc-field sc-cc">Crisis Communication</div><div class="sc-name">W. Timothy Coombs</div><div class="sc-work">Corporate Reputation Review (2007)</div><div class="sc-desc">Situational Crisis Communication Theory (SCCT) distinguishes instructing information (safety) from adjusting information (emotional support). FEMA's posts map clearly to instructing; ARC's to adjusting.</div></div>
+      <div class="scholar-card vis" data-sc="cc"><div class="sc-field sc-cc">Crisis Communication</div><div class="sc-name">Austin, Jin &amp; Liu</div><div class="sc-work">SMCC Model (2012, 2017)</div><div class="sc-desc">Social-Mediated Crisis Communication: publics draw simultaneously on official channels, news, and peer networks. Trust and authenticity matter as much as content. Crises are multivocal — a point this project's analysis of replies bears out.</div></div>
+      <div class="scholar-card vis" data-sc="cc"><div class="sc-field sc-cc">Crisis Communication</div><div class="sc-name">danah boyd</div><div class="sc-work">A Networked Self (2010)</div><div class="sc-desc">Networked publics are not passive recipients. They search, share, quote-tweet, and interpret institutional messages through their own social positions — a finding visible in the divergent reply patterns in this dataset.</div></div>
+      <div class="scholar-card vis" data-sc="rh"><div class="sc-field sc-rh">Rhetorical Theory</div><div class="sc-name">Bitzer, Vatz &amp; Burke</div><div class="sc-work">Philosophy &amp; Rhetoric (1968, 1973); Rhetoric of Motives (1969)</div><div class="sc-desc">Classical rhetoric attends to exigence, who constructs it, and how identification operates across institutional and public discourse. The foundational vocabulary for this project's analysis of FEMA's and ARC's rhetorical situations.</div></div>
+      <div class="scholar-card vis" data-sc="rh"><div class="sc-field sc-rh">Rhetorical Theory</div><div class="sc-name">Kent &amp; Taylor</div><div class="sc-work">Public Relations Review (2002)</div><div class="sc-desc">Dialogic theory of public relations: genuine organizational communication requires mutuality, propinquity, empathy, risk, and commitment. The five-principle framework used in this project's dialogic coding.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD -->
+<section class="sec" id="method">
+  <div class="container--wide">
+    <div class="sec-head">
+      <span class="eyebrow">Methodology</span>
+      <h2>How This Research Was Done</h2>
+      <p>A multi-method approach combining qualitative rhetorical analysis, dialogic coding, platform affordance analysis, and DH visualization — grounded in a deliberate stance on the post-API condition.</p>
+    </div>
+    <div class="method-grid">
+      <div class="method-card"><div class="method-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg></div><div class="method-title">Qualitative Textual Analysis</div><div class="method-desc">Each post coded for rhetorical appeals (ethos, pathos, logos), tone, subject focus, call-to-action type, and emotional register. Two coding passes per post, cross-checked for consistency.</div></div>
+      <div class="method-card"><div class="method-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg></div><div class="method-title">Dialogic Feature Coding</div><div class="method-desc">Posts evaluated against Kent &amp; Taylor's (2002) five dialogic principles: mutuality, propinquity, empathy, risk, and commitment. Each marked present or absent per post.</div></div>
+      <div class="method-card"><div class="method-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="3" y1="15" x2="21" y2="15"/><line x1="9" y1="3" x2="9" y2="21"/><line x1="15" y1="3" x2="15" y2="21"/></svg></div><div class="method-title">Platform Affordance Analysis</div><div class="method-desc">Attention to X-specific elements (threading, quote-tweets, character limits, link previews) vs. Instagram-specific elements (carousels, stories, Reels, visual grammar, caption-link constraints).</div></div>
+      <div class="method-card"><div class="method-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg></div><div class="method-title">DH Visualization (Chart.js)</div><div class="method-desc">Visualizations built with Chart.js following Drucker's (2009, 2012) speculative computing and D'Ignazio &amp; Klein's (2020) feminist data ethics — treating every chart as a rhetorical argument, not a neutral display.</div></div>
+      <div class="method-card"><div class="method-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg></div><div class="method-title">Networked Publics Sample</div><div class="method-desc">A limited sample of publicly visible replies and quote-tweets analyzed to show how networked publics reframed and extended (or contested) institutional messages (Boyd, 2010).</div></div>
+      <div class="method-card"><div class="method-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div class="method-title">Cross-Platform Comparative</div><div class="method-desc">Paired analysis comparing how each organization's rhetorical profile shifts between X and Instagram — revealing that platform affordances amplify existing organizational tendencies rather than transforming them.</div></div>
+    </div>
+
+    <div style="margin-top:var(--space-10);margin-bottom:var(--space-6)">
+      <h3 style="font-size:var(--text-base);font-weight:700;margin-bottom:var(--space-3)">Visualization Tools Used</h3>
+      <div class="tools-row">
+        <span class="tool-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>Chart.js 4.4 — Interactive Charts</span>
+        <span class="tool-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>HTML/CSS/JS — Static DH Publication</span>
+        <span class="tool-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>Manual Coding Spreadsheet</span>
+        <span class="tool-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="m9 9 6 6M15 9l-6 6"/></svg>Future: D3.js — Network Graphs</span>
+        <span class="tool-chip"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>Future: Palladio — Geographic Mapping</span>
+      </div>
+    </div>
+
+    <div class="api-box">
+      <div class="api-box-icon">
+        <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-label="Warning"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+      </div>
+      <div>
+        <h3>The APIcalypse as Upstream Problem — and This Project's Response</h3>
+        <p>Freelon (2018) named the structural shift as the "post-API age." Bruns (2019) documented the APIcalypse's consequences for Twitter research specifically. By 2023–2025, both X and Instagram had made automated data collection economically and technically impossible for most academic researchers. This means the field of social media crisis communication faces an "upstream" problem: the very methods that produced its empirical base (large-scale API-pulled datasets) are no longer available.</p>
+        <p>This project's manually curated dataset is a deliberate methodological response. Rather than treating this constraint as a flaw requiring apology, the project theorizes manual curation — aligned with DH close reading traditions (Drucker, 2012; Walsh, 2023) and feminist data ethics (D'Ignazio &amp; Klein, 2020) — as a principled, reproducible methodology for post-API social media scholarship. The smallness of the corpus is a finding about platform power, not a research limitation. Future expansion to Palladio-based geographic mapping and D3.js network visualization would extend this approach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- REFERENCES -->
+<section class="refs-sec" id="refs">
+  <div class="container--narrow">
+    <div class="sec-head"><span class="eyebrow">Bibliography</span><h2>References</h2></div>
+    <ul class="ref-list">
+      <li class="ref-item">Austin, L., Fraustino, J. D., Jin, Y., &amp; Liu, B. F. (2017). Crisis communication in a changing media environment. In L. Austin &amp; Y. Jin (Eds.), <em>Social media and crisis communication</em> (pp. 423–448). Routledge. https://doi.org/10.4324/9781315749068-30</li>
+      <li class="ref-item">Bitzer, L. F. (1968). The rhetorical situation. <em>Philosophy &amp; Rhetoric, 1</em>(1), 1–14.</li>
+      <li class="ref-item">Boyd, D. (2010). Social network sites as networked publics. In Z. Papacharissi (Ed.), <em>A networked self</em> (pp. 39–58). Routledge. https://doi.org/10.4324/9780203876527-8</li>
+      <li class="ref-item">Bruns, A. (2019). After the 'APIcalypse'. <em>Information, Communication &amp; Society, 22</em>(11), 1544–1566. https://doi.org/10.1080/1369118X.2019.1637447</li>
+      <li class="ref-item">Burke, K. (1969). <em>A rhetoric of motives.</em> University of California Press.</li>
+      <li class="ref-item">Chun, W. H. K. (2011). <em>Programmed visions: Software and memory.</em> MIT Press. https://doi.org/10.7551/mitpress/9780262015424.001.0001</li>
+      <li class="ref-item">Coombs, W. T. (2007). Protecting organization reputations during a crisis. <em>Corporate Reputation Review, 10</em>(3), 163–176. https://doi.org/10.1057/palgrave.crr.1550049</li>
+      <li class="ref-item">D'Ignazio, C., &amp; Klein, L. F. (2020). <em>Data feminism.</em> MIT Press. https://doi.org/10.7551/mitpress/11805.001.0001</li>
+      <li class="ref-item">Drucker, J. (2009). <em>SpecLab.</em> University of Chicago Press.</li>
+      <li class="ref-item">Drucker, J. (2012). Humanistic theory and digital scholarship. In M. K. Gold (Ed.), <em>Debates in the digital humanities</em> (pp. 85–95). University of Minnesota Press.</li>
+      <li class="ref-item">Freelon, D. (2018). Computational research in the post-API age. <em>Political Communication, 35</em>(4), 665–668. https://doi.org/10.1080/10584609.2018.1477506</li>
+      <li class="ref-item">Gillespie, T. (2014). The relevance of algorithms. In T. Gillespie et al. (Eds.), <em>Media technologies</em> (pp. 167–194). MIT Press.</li>
+      <li class="ref-item">Jin, Y., Liu, B. F., &amp; Austin, L. L. (2014). Examining the role of social media in effective crisis management. <em>Communication Research, 41</em>(1), 74–94. https://doi.org/10.1177/0093650211423918</li>
+      <li class="ref-item">Kent, M. L., &amp; Taylor, M. (2002). Toward a dialogic theory of public relations. <em>Public Relations Review, 28</em>(1), 21–37. https://doi.org/10.1016/S0363-8111(02)00108-X</li>
+      <li class="ref-item">Lomborg, S., &amp; Bechmann, A. (2014). Using APIs for data collection on social media. <em>The Information Society, 30</em>(4), 256–265. https://doi.org/10.1080/01972243.2014.915276</li>
+      <li class="ref-item">Mileti, D. S. (1999). <em>Disasters by design: A reassessment of natural hazards in the United States.</em> Joseph Henry Press.</li>
+      <li class="ref-item">Noble, S. U. (2018). <em>Algorithms of oppression.</em> NYU Press. https://doi.org/10.2307/j.ctt1pwt9w5</li>
+      <li class="ref-item">Quarantelli, E. L. (1988). Disaster crisis management: A summary of research findings. <em>Journal of Management Studies, 25</em>(4), 373–385. https://doi.org/10.1111/j.1467-6486.1988.tb00043.x</li>
+      <li class="ref-item">Starosielski, N. (2015). <em>The undersea network.</em> Duke University Press. https://doi.org/10.1215/9780822376224</li>
+      <li class="ref-item">Tufekci, Z. (2017). <em>Twitter and tear gas.</em> Yale University Press.</li>
+      <li class="ref-item">Vatz, R. E. (1973). The myth of the rhetorical situation. <em>Philosophy &amp; Rhetoric, 6</em>(3), 154–161.</li>
+      <li class="ref-item">Walsh, M. (2023). The challenges and possibilities of social media data. In M. K. Gold &amp; L. F. Klein (Eds.), <em>Debates in the digital humanities 2023</em> (pp. 275–290). University of Minnesota Press. https://doi.org/10.5749/9781452969565</li>
+    </ul>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container--wide">
+    <div class="footer-inner">
+      <div class="footer-brand">Digital Crisis Rhetoric</div>
+      <div class="footer-meta">Andrew Donkor · MITH610 Digital Studies in the Arts &amp; Humanities · University of Maryland, College Park · Spring 2026 · Dr. Jeffrey Moro</div>
+    </div>
+  </div>
+</footer>
+
+<script>
+// THEME
+(function(){
+  const btn=document.getElementById('themetgl'),html=document.documentElement;
+  let mode=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  html.setAttribute('data-theme',mode);
+  function upd(){if(!btn)return;btn.setAttribute('aria-label','Switch to '+(mode==='dark'?'light':'dark')+' mode');btn.innerHTML=mode==='dark'?'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>':'<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';}
+  upd();btn&&btn.addEventListener('click',()=>{mode=mode==='dark'?'light':'dark';html.setAttribute('data-theme',mode);upd();setTimeout(()=>{Object.values(CHR).forEach(c=>c&&c.destroy());initCharts();},80);});
+})();
+// MOBILE NAV
+document.getElementById('mobbtn').addEventListener('click',()=>document.getElementById('navlinks').classList.toggle('open'));
+// NAV SHADOW
+window.addEventListener('scroll',()=>document.getElementById('sitenav').classList.toggle('scrolled',scrollY>8),{passive:true});
+// TOC active
+const sections=document.querySelectorAll('section[id],div[id]');const tocLinks=document.querySelectorAll('#toc a');
+const io=new IntersectionObserver(ents=>{ents.forEach(e=>{if(e.isIntersecting){tocLinks.forEach(l=>l.classList.toggle('act',l.getAttribute('href')==='#'+e.target.id));}});},{rootMargin:'-20% 0px -70% 0px'});sections.forEach(s=>io.observe(s));
+
+// CHART DATA
+const DATA={
+  all:{fema:{logos:87,pathos:18,ethos:42},arc:{logos:21,pathos:79,ethos:55},dialog:{fema:[28,15,12,8,55],arc:[72,68,81,43,78]}},
+  x:  {fema:{logos:90,pathos:14,ethos:38},arc:{logos:24,pathos:75,ethos:52},dialog:{fema:[22,12,10,6,58],arc:[70,65,82,40,76]}},
+  ig: {fema:{logos:83,pathos:23,ethos:47},arc:{logos:17,pathos:84,ethos:60},dialog:{fema:[35,19,15,11,51],arc:[75,72,80,47,81]}}
+};
+const KPI={
+  all:{total:'143',fema:'73',arc:'70',fnote:'X: 41 · Instagram: 32',anote:'X: 38 · Instagram: 32'},
+  x:  {total:'79', fema:'41',arc:'38',fnote:'X only',anote:'X only'},
+  ig: {total:'64', fema:'32',arc:'32',fnote:'Instagram only',anote:'Instagram only'}
+};
+let activePlat='all';
+const CHR={};
+
+function getColors(){
+  const d=document.documentElement.getAttribute('data-theme')==='dark';
+  return{
+    text:d?'#cbc9c2':'#1e1b14',muted:d?'#7a7870':'#6e6b64',
+    grid:d?'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)',
+    fema:d?'rgba(208,96,96,0.85)':'rgba(139,37,37,0.85)',
+    arc:d?'rgba(90,156,212,0.85)':'rgba(26,79,122,0.85)',
+    ig:d?'rgba(224,107,160,0.8)':'rgba(193,53,132,0.8)',
+    femaBd:d?'#d06060':'#8b2525',arcBd:d?'#5a9cd4':'#1a4f7a'
+  };
+}
+
+function initCharts(){
+  Chart.defaults.font.family="'Satoshi',sans-serif";
+  const c=getColors(),d=DATA[activePlat];
+  const base={responsive:true,maintainAspectRatio:false};
+
+  // RHETORIC
+  if(CHR.r)CHR.r.destroy();
+  CHR.r=new Chart(document.getElementById('rhetoricChart'),{type:'bar',data:{labels:['Logos','Pathos','Ethos'],datasets:[{label:'FEMA',data:[d.fema.logos,d.fema.pathos,d.fema.ethos],backgroundColor:c.fema,borderRadius:6,borderSkipped:false},{label:'ARC',data:[d.arc.logos,d.arc.pathos,d.arc.ethos],backgroundColor:c.arc,borderRadius:6,borderSkipped:false}]},options:{...base,plugins:{legend:{labels:{color:c.text,font:{size:12}}},tooltip:{callbacks:{label:i=>` ${i.dataset.label}: ${i.parsed.y}%`}}},scales:{x:{grid:{color:c.grid},ticks:{color:c.muted}},y:{grid:{color:c.grid},ticks:{color:c.muted,callback:v=>v+'%'},max:100}}}});
+
+  // DIALOGIC
+  if(CHR.d)CHR.d.destroy();
+  CHR.d=new Chart(document.getElementById('dialogicChart'),{type:'radar',data:{labels:['Mutuality','Propinquity','Empathy','Risk','Commitment'],datasets:[{label:'FEMA',data:d.dialog.fema,borderColor:c.femaBd,backgroundColor:c.fema.replace('0.85','0.1'),pointBackgroundColor:c.femaBd,borderWidth:2},{label:'ARC',data:d.dialog.arc,borderColor:c.arcBd,backgroundColor:c.arc.replace('0.85','0.1'),pointBackgroundColor:c.arcBd,borderWidth:2}]},options:{...base,plugins:{legend:{labels:{color:c.text,font:{size:12}}}},scales:{r:{grid:{color:c.grid},pointLabels:{color:c.muted,font:{size:11}},ticks:{display:false},suggestedMin:0,suggestedMax:100}}}});
+
+  // PLATFORM COMPARISON
+  if(CHR.p)CHR.p.destroy();
+  CHR.p=new Chart(document.getElementById('platformChart'),{type:'bar',data:{labels:['FEMA Logos','FEMA Pathos','FEMA Ethos','ARC Logos','ARC Pathos','ARC Ethos'],datasets:[{label:'X (Twitter)',data:[DATA.x.fema.logos,DATA.x.fema.pathos,DATA.x.fema.ethos,DATA.x.arc.logos,DATA.x.arc.pathos,DATA.x.arc.ethos],backgroundColor:[c.fema,c.fema,c.fema,c.arc,c.arc,c.arc].map(x=>x.replace('0.85','0.7')),borderRadius:5,borderSkipped:false},{label:'Instagram',data:[DATA.ig.fema.logos,DATA.ig.fema.pathos,DATA.ig.fema.ethos,DATA.ig.arc.logos,DATA.ig.arc.pathos,DATA.ig.arc.ethos],backgroundColor:[c.ig,c.ig,c.ig,c.ig,c.ig,c.ig].map(x=>x.replace('0.8','0.65')),borderRadius:5,borderSkipped:false}]},options:{...base,plugins:{legend:{labels:{color:c.text,font:{size:12}}}},scales:{x:{grid:{color:c.grid},ticks:{color:c.muted,font:{size:11}}},y:{grid:{color:c.grid},ticks:{color:c.muted,callback:v=>v+'%'},max:100}}}});
+
+  // TIMELINE
+  if(CHR.t)CHR.t.destroy();
+  CHR.t=new Chart(document.getElementById('timelineChart'),{type:'bar',data:{labels:['2020 CZU','2020 SCU','2020 Aug Complex','2021 Dixie','2021 Caldor','2022 Mosquito','2023 Oak/Rough','2023 Maui*','2024 Park','2025 Palisades'],datasets:[{label:'FEMA',data:[7,10,9,13,11,5,4,7,6,9],backgroundColor:c.fema,borderRadius:4},{label:'ARC',data:[6,8,8,10,11,5,4,6,7,7],backgroundColor:c.arc,borderRadius:4}]},options:{...base,plugins:{legend:{labels:{color:c.text,font:{size:12}}},tooltip:{callbacks:{footer:i=>i[0].label.includes('Maui')?'*Maui/Lahaina included for scope':''}}},scales:{x:{grid:{color:c.grid},ticks:{color:c.muted,font:{size:10},maxRotation:0}},y:{grid:{color:c.grid},ticks:{color:c.muted}}}}});
+}
+initCharts();
+
+// PLATFORM FILTER
+document.querySelectorAll('[data-plat]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('[data-plat]').forEach(b=>b.classList.remove('on','on-ig'));
+    const p=btn.dataset.plat;activePlat=p;
+    if(p==='ig')btn.classList.add('on-ig');else btn.classList.add('on');
+    const k=KPI[p];
+    document.getElementById('kv-total').textContent=k.total;
+    document.getElementById('kv-fema').textContent=k.fema;
+    document.getElementById('kv-arc').textContent=k.arc;
+    document.getElementById('kn-fema').textContent=k.fnote;
+    document.getElementById('kn-arc').textContent=k.anote;
+    const lbl=p==='all'?'all platforms combined':p==='x'?'X (Twitter) only':'Instagram only';
+    document.getElementById('plat-lbl-1').textContent=lbl;
+    document.getElementById('plat-lbl-2').textContent=lbl;
+    Object.values(CHR).forEach(c=>c&&c.destroy());initCharts();
+  });
+});
+
+// SCHOLAR TABS
+document.querySelectorAll('[data-sc]').forEach(btn=>{
+  btn.addEventListener('click',()=>{
+    document.querySelectorAll('[data-sc]').forEach(b=>b.classList.remove('on'));
+    btn.classList.add('on');const f=btn.dataset.sc;let delay=0;
+    document.querySelectorAll('.scholar-card').forEach(card=>{
+      const show=f==='all'||card.dataset.sc===f;
+      card.style.display=show?'':'none';
+      if(show){card.classList.remove('vis');setTimeout(()=>card.classList.add('vis'),delay);delay+=50;}
+    });
+  });
+});
+</script>
+</body>
+</html>
