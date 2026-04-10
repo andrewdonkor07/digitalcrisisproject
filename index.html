@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Rhetorical Infrastructure — Andrew Donkor | MITH610</title>
+  <meta name="description" content="Examining how platform infrastructure shapes disaster crisis communication — FEMA and the American Red Cross on social media during California wildfires 2020–2025." />
+
+  <!-- Fonts -->
+  <link href="https://api.fontshare.com/v2/css?f[]=cabinet-grotesk@400,500,700,800,900&f[]=satoshi@400,500,700&display=swap" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet" />
+
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+
+  <!-- Lucide icons -->
+  <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════ NAV ══ -->
+  <header class="site-header" id="top">
+    <nav class="nav-inner">
+      <a href="#top" class="nav-logo" aria-label="Home">
+        <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="var(--color-primary)"/>
+          <path d="M8 22 L16 10 L24 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M11 18 L21 18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="16" cy="10" r="2" fill="white"/>
+        </svg>
+        <span class="nav-logo-text">Rhetorical Infrastructure</span>
+      </a>
+
+      <ul class="nav-links" role="list">
+        <li><a href="#overview">Overview</a></li>
+        <li><a href="#theory">Theory</a></li>
+        <li><a href="#data">Data</a></li>
+        <li><a href="#posts">Posts</a></li>
+        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#about">About</a></li>
+        <li><a href="#bibliography">Bibliography</a></li>
+      </ul>
+
+      <div class="nav-actions">
+        <button class="icon-btn" data-theme-toggle aria-label="Switch to dark mode">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        </button>
+        <button class="nav-hamburger icon-btn" id="menuToggle" aria-label="Open menu">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile nav -->
+    <div class="mobile-nav" id="mobileNav" hidden>
+      <ul role="list">
+        <li><a href="#overview" onclick="closeMobileNav()">Overview</a></li>
+        <li><a href="#theory" onclick="closeMobileNav()">Theory</a></li>
+        <li><a href="#data" onclick="closeMobileNav()">Data</a></li>
+        <li><a href="#posts" onclick="closeMobileNav()">Posts</a></li>
+        <li><a href="#gallery" onclick="closeMobileNav()">Gallery</a></li>
+        <li><a href="#timeline" onclick="closeMobileNav()">Timeline</a></li>
+        <li><a href="#about" onclick="closeMobileNav()">About</a></li>
+        <li><a href="#bibliography" onclick="closeMobileNav()">Bibliography</a></li>
+      </ul>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- ════════════════════════════════════════════════════════ HERO ══ -->
+    <section class="hero" id="hero-section">
+      <div class="hero-bg-grid" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-eyebrow fade-in">
+          <span class="badge badge-fire">🔥 California Wildfires 2020–2025</span>
+          <span class="badge badge-course">MITH610 · University of Maryland</span>
+        </div>
+        <h1 class="hero-title fade-in">
+          Rhetorical Infrastructure,<br/>
+          <em>API Access</em>, and Disaster<br/>
+          Communication in the<br/>
+          Social Media Age
+        </h1>
+        <p class="hero-subtitle fade-in">
+          How do platform architectures, API restrictions, and algorithmic logics
+          shape what disaster relief organizations can say, and what researchers
+          can see, during a crisis?
+        </p>
+        <div class="hero-meta fade-in">
+          <div class="hero-stat">
+            <span class="stat-num" data-target="240">0</span>
+            <span class="stat-label">Curated Posts</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="stat-num" data-target="2">0</span>
+            <span class="stat-label">Organizations</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="stat-num" data-target="2">0</span>
+            <span class="stat-label">Platforms</span>
+          </div>
+          <div class="hero-stat-divider" aria-hidden="true"></div>
+          <div class="hero-stat">
+            <span class="stat-num" data-target="5">0</span>
+            <span class="stat-label">Wildfire Seasons</span>
+          </div>
+        </div>
+        <div class="hero-ctas fade-in">
+          <a href="#overview" class="btn btn-primary">Explore the Project</a>
+          <a href="#data" class="btn btn-ghost">View Findings</a>
+        </div>
+      </div>
+      <div class="hero-visual fade-in" aria-hidden="true">
+        <div class="platform-ring platform-ring-outer">
+          <div class="platform-node node-fema-x" title="FEMA on X">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25z"/></svg>
+            FEMA
+          </div>
+          <div class="platform-node node-arc-x" title="ARC on X">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25z"/></svg>
+            Red Cross
+          </div>
+          <div class="platform-node node-fema-ig" title="FEMA on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+            FEMA
+          </div>
+          <div class="platform-node node-arc-ig" title="ARC on Instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+            Red Cross
+          </div>
+        </div>
+        <div class="platform-center">
+          <div class="center-glyph">
+            <svg viewBox="0 0 48 48" fill="none" width="40" height="40">
+              <circle cx="24" cy="24" r="22" stroke="var(--color-primary)" stroke-width="2" stroke-dasharray="4 3"/>
+              <path d="M14 24 L24 14 L34 24 L24 34 Z" stroke="var(--color-primary)" stroke-width="2" fill="var(--color-primary-highlight)"/>
+            </svg>
+          </div>
+          <span class="center-label">Crisis<br/>Communication</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════ OVERVIEW ══ -->
+    <section class="section" id="overview">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">01 — Project Overview</span>
+          <h2 class="section-title">What This Project Is About</h2>
+        </div>
+        <div class="overview-grid">
+          <div class="overview-text fade-in">
+            <p>This project offers a historically situated and methodologically self-aware examination of how the formal features of social media platforms shape the crisis communication practices of disaster relief organizations. Focusing on <strong>FEMA</strong> and the <strong>American Red Cross (ARC)</strong>, I analyze posts on <strong>X (formerly Twitter)</strong> and <strong>Instagram</strong> across major California wildfire events between 2020 and 2025.</p>
+            <p>Two interrelated forces defined this period. The <strong>COVID-19 pandemic</strong> transformed how the public inhabits, uses, and understands social media. And major <strong>platform shifts</strong> (including Twitter's restructuring into X, significant restrictions on API access, and Instagram's algorithmic reorientation) dramatically altered the conditions under which institutional crisis communication occurs and under which researchers can study it.</p>
+            <p>This project substantially expands on my prior textual analysis of 79 X posts, building a curated corpus of approximately <strong>240 posts</strong> drawn from both X and Instagram, distributed across four distinct wildfire seasons.</p>
+          </div>
+          <div class="overview-cards fade-in">
+            <div class="feature-card card-fire">
+              <div class="feature-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
+              </div>
+              <h3>Historical Specificity</h3>
+              <p>The 2020–2025 period is not a generic "social media era." COVID temporality, the Twitter-to-X transition, and API closure produced a historically distinct media environment.</p>
+            </div>
+            <div class="feature-card card-api">
+              <div class="feature-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
+              </div>
+              <h3>Post-API Methodology</h3>
+              <p>The APIcalypse is not a technical inconvenience — it is a form of platform power. This project treats manual curation as a principled and theoretically rigorous methodological response.</p>
+            </div>
+            <div class="feature-card card-rhetoric">
+              <div class="feature-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              </div>
+              <h3>Rhetorical Analysis</h3>
+              <p>Close reading of how FEMA and ARC construct authority, empathy, and urgency — and how platform form enables or forecloses certain rhetorical possibilities.</p>
+            </div>
+            <div class="feature-card card-platform">
+              <div class="feature-card-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
+              </div>
+              <h3>Cross-Platform Comparison</h3>
+              <p>Comparing X and Instagram reveals how platform affordances, including algorithmic feeds, hashtag visibility, and image-first design, produce distinct rhetorical environments for the same organizations.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Corpus breakdown -->
+        <div class="corpus-grid fade-in">
+          <h3 class="corpus-title">Corpus Breakdown: 240 Posts</h3>
+          <div class="corpus-table">
+            <div class="corpus-row corpus-row-header">
+              <div></div>
+              <div>
+                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25z"/></svg>
+                X (Twitter)
+              </div>
+              <div>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+                Instagram
+              </div>
+              <div>Total</div>
+            </div>
+            <div class="corpus-row corpus-row-fema">
+              <div class="corpus-org">
+                <span class="org-dot dot-fema"></span>
+                FEMA
+              </div>
+              <div>60 posts</div>
+              <div>60 posts</div>
+              <div class="corpus-total">120</div>
+            </div>
+            <div class="corpus-row corpus-row-arc">
+              <div class="corpus-org">
+                <span class="org-dot dot-arc"></span>
+                American Red Cross
+              </div>
+              <div>60 posts</div>
+              <div>60 posts</div>
+              <div class="corpus-total">120</div>
+            </div>
+            <div class="corpus-row corpus-row-footer">
+              <div>Total</div>
+              <div>120</div>
+              <div>120</div>
+              <div class="corpus-total">240</div>
+            </div>
+          </div>
+          <div class="wildfire-seasons">
+            <span class="season-badge">2020 Creek & North Complex</span>
+            <span class="season-badge">2021 Dixie Fire</span>
+            <span class="season-badge">2023 California & Maui</span>
+            <span class="season-badge">2025 Los Angeles</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════════════ THEORY ══ -->
+    <section class="section section-alt" id="theory">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">02 — Theoretical Framework</span>
+          <h2 class="section-title">Major Thinkers &amp; Conversations</h2>
+          <p class="section-desc">Click any thinker below to explore how their work informs this project.</p>
+        </div>
+
+        <div class="thinkers-grid fade-in" id="thinkersGrid">
+          <!-- Cards injected by JS -->
+        </div>
+
+        <!-- Thinker detail panel -->
+        <div class="thinker-panel" id="thinkerPanel" hidden>
+          <button class="thinker-panel-close icon-btn" id="closeThinkerPanel" aria-label="Close">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <div class="thinker-panel-inner" id="thinkerPanelInner"></div>
+        </div>
+
+        <!-- Framework overview -->
+        <div class="framework-overview fade-in">
+          <div class="framework-node fw-digital-studies">
+            <h4>Digital Studies</h4>
+            <ul>
+              <li>Drucker (2011, 2020)</li>
+              <li>McPherson (2018)</li>
+              <li>Hu (2015)</li>
+            </ul>
+          </div>
+          <div class="framework-node fw-infrastructure">
+            <h4>Infrastructure Studies</h4>
+            <ul>
+              <li>Starosielski (2015)</li>
+              <li>Bucher (2018)</li>
+              <li>Kennedy (2016)</li>
+            </ul>
+          </div>
+          <div class="framework-node fw-postapi">
+            <h4>Post-API Methods</h4>
+            <ul>
+              <li>Bruns (2019)</li>
+              <li>Freelon (2018)</li>
+              <li>Perriam et al. (2020)</li>
+              <li>Walsh (2023)</li>
+              <li>Lomborg &amp; Bechmann (2014)</li>
+              <li>Weller (2015)</li>
+            </ul>
+          </div>
+          <div class="framework-node fw-crisis">
+            <h4>Crisis Communication</h4>
+            <ul>
+              <li>Jin, Liu &amp; Austin (2014)</li>
+              <li>Austin et al. (2017)</li>
+              <li>Kent &amp; Taylor (2002)</li>
+              <li>Taylor &amp; Kent (2014)</li>
+              <li>Coombs (2022)</li>
+              <li>Zappavigna (2012)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════ DATA ══ -->
+    <section class="section" id="data">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">03 — Findings &amp; Analysis</span>
+          <h2 class="section-title">What the Data Reveals</h2>
+          <p class="section-desc">Rhetorical analysis of 240 curated posts across FEMA and the American Red Cross, compared by organization, platform, and wildfire season.</p>
+        </div>
+
+        <!-- Chart row 1 -->
+        <div class="charts-row fade-in">
+          <div class="chart-card">
+            <h3 class="chart-title">Rhetorical Appeals by Organization</h3>
+            <p class="chart-desc">FEMA relies heavily on logos (procedural, fact-based) while ARC favors pathos-centered, narrative communication.</p>
+            <div class="chart-wrap">
+              <canvas id="chartAppeals" aria-label="Rhetorical appeals comparison chart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3 class="chart-title">Post Format Distribution</h3>
+            <p class="chart-desc">Format choices signal institutional identity: ARC uses visuals and video to humanize; FEMA relies on infographics and text.</p>
+            <div class="chart-wrap">
+              <canvas id="chartFormats" aria-label="Post format distribution chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Chart row 2 -->
+        <div class="charts-row charts-row-2 fade-in">
+          <div class="chart-card chart-card-wide">
+            <h3 class="chart-title">Posting Frequency by Wildfire Season</h3>
+            <p class="chart-desc">Post volume across both organizations tracks escalation events — the 2025 LA fires produced the highest sustained communication activity.</p>
+            <div class="chart-wrap chart-wrap-wide">
+              <canvas id="chartTimeline" aria-label="Posting frequency timeline chart"></canvas>
+            </div>
+          </div>
+          <div class="chart-card">
+            <h3 class="chart-title">Dialogic Features</h3>
+            <p class="chart-desc">ARC posts score higher on dialogic principles — empathy, interactivity acknowledgment, invitation to respond — than FEMA posts.</p>
+            <div class="chart-wrap">
+              <canvas id="chartDialogic" aria-label="Dialogic features radar chart"></canvas>
+            </div>
+          </div>
+        </div>
+
+        <!-- Key findings -->
+        <div class="findings-grid fade-in">
+          <h3 class="findings-title">Key Analytical Findings</h3>
+          <div class="finding-item">
+            <div class="finding-num">01</div>
+            <div class="finding-text">
+              <h4>Platform Form Shapes Rhetoric</h4>
+              <p>Instagram's image-first interface consistently elicits more emotionally resonant posts from both organizations, while X's retweet culture incentivizes informational brevity and procedural updates.</p>
+            </div>
+          </div>
+          <div class="finding-item">
+            <div class="finding-num">02</div>
+            <div class="finding-text">
+              <h4>COVID Temporality Complicates Crisis</h4>
+              <p>Posts from 2020–2021 reflect a layered crisis environment in which wildfire urgency competed with pandemic fatigue. Both organizations adjusted tone and frequency in ways not visible in pre-2020 data.</p>
+            </div>
+          </div>
+          <div class="finding-item">
+            <div class="finding-num">03</div>
+            <div class="finding-text">
+              <h4>The APIcalypse as Rhetorical Fact</h4>
+              <p>The closure of Twitter's free API tier in 2023 constitutes not merely a methodological challenge but a form of platform power that makes certain forms of institutional communication harder to study and therefore easier to naturalize.</p>
+            </div>
+          </div>
+          <div class="finding-item">
+            <div class="finding-num">04</div>
+            <div class="finding-text">
+              <h4>Institutional Identity Persists Across Platforms</h4>
+              <p>Despite platform differences, FEMA's logos-driven procedural ethos and ARC's pathos-centered narrative voice remain recognizable across X and Instagram, suggesting that organizational rhetorical identity is more durable than platform logic.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════ POSTS ══ -->
+    <section class="section section-alt" id="posts">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">04 — Post Explorer</span>
+          <h2 class="section-title">Browse the Dataset</h2>
+          <p class="section-desc">All 79 X posts from the original analysis dataset. Click any post to view the full content, rhetorical coding, and direct link to the original.</p>
+        </div>
+
+        <!-- Filter bar -->
+        <div class="posts-filters fade-in" role="group" aria-label="Filter posts">
+          <button class="filter-btn active" data-filter="all">All Posts</button>
+          <button class="filter-btn" data-filter="fema">FEMA</button>
+          <button class="filter-btn" data-filter="arc">Red Cross</button>
+          <button class="filter-btn" data-filter="logos">Logos</button>
+          <button class="filter-btn" data-filter="pathos">Pathos</button>
+          <button class="filter-btn" data-filter="ethos">Ethos</button>
+          <input type="search" class="posts-search" id="postSearch" placeholder="Search posts…" aria-label="Search posts" />
+        </div>
+
+        <div class="posts-count fade-in" id="postsCount">Showing all 79 posts</div>
+
+        <!-- Posts grid -->
+        <div class="posts-grid" id="postsGrid" role="list">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════ WILDFIRE GALLERY ══ -->
+    <section class="section wildfire-gallery-section" id="gallery">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">05 — Visual Context</span>
+          <h2 class="section-title">The Crisis Behind the Data</h2>
+          <p class="section-desc">California's 2020–2025 wildfire seasons produced some of the most devastating disasters in state history, reshaping how communities and institutions communicate during emergencies.</p>
+        </div>
+        <div class="gallery-grid fade-in">
+          <div class="gallery-item gallery-item-large">
+            <img src="wildfire-la-aerial.jpg" alt="Aerial view of Los Angeles wildfire destruction, 2025" class="gallery-img" loading="lazy" />
+            <div class="gallery-caption">
+              <span class="gallery-badge gallery-badge-2025">2025 Los Angeles Fires</span>
+              <p>Aerial view of destruction across the Los Angeles region during the January 2025 fires, which burned through the largest urban area scorched in California in at least 40 years.</p>
+            </div>
+          </div>
+          <div class="gallery-col">
+            <div class="gallery-item">
+              <img src="wildfire-aerial.jpg" alt="Satellite view of California wildfire from above" class="gallery-img" loading="lazy" />
+              <div class="gallery-caption">
+                <span class="gallery-badge gallery-badge-2024">2024 Park Fire</span>
+                <p>Satellite imagery captures the scale of California wildfires, providing context for the surge in crisis communication volume during peak fire seasons.</p>
+              </div>
+            </div>
+            <div class="gallery-item">
+              <img src="wildfire-firefighter.jpg" alt="Aerial firefighting operations over California wildfire" class="gallery-img" loading="lazy" />
+              <div class="gallery-caption">
+                <span class="gallery-badge gallery-badge-ops">Aerial Operations</span>
+                <p>FEMA and ARC coordinate communication around firefighting operations, producing distinct rhetorical strategies for public and institutional audiences.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="gallery-stat-strip fade-in">
+          <div class="gstat">
+            <span class="gstat-num">4M+</span>
+            <span class="gstat-label">Acres Burned in 2020</span>
+          </div>
+          <div class="gstat">
+            <span class="gstat-num">963K</span>
+            <span class="gstat-label">Acres in 2021 Dixie Fire</span>
+          </div>
+          <div class="gstat">
+            <span class="gstat-num">$250B+</span>
+            <span class="gstat-label">Estimated 2025 LA Damages</span>
+          </div>
+          <div class="gstat">
+            <span class="gstat-num">150K+</span>
+            <span class="gstat-label">People Evacuated in 2025</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ TIMELINE ══ -->
+    <section class="section section-alt" id="timeline">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">06 — Platform & Wildfire Timeline</span>
+          <h2 class="section-title">Five Years of Crisis &amp; Platform Change</h2>
+          <p class="section-desc">The 2020–2025 period was not a stable media environment. Click any event to learn more about its significance for this project.</p>
+        </div>
+
+        <div class="timeline-container fade-in" id="timelineContainer">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════════════ ABOUT ══ -->
+    <section class="section section-alt" id="about">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">07 — About the Researcher</span>
+          <h2 class="section-title">Andrew Donkor</h2>
+        </div>
+        <div class="about-grid fade-in">
+          <div class="about-photo-wrap">
+            <img src="andrew.jpg" alt="Andrew Donkor — PhD student in Communication at the University of Maryland" class="about-photo" />
+            <div class="about-photo-ring" aria-hidden="true"></div>
+          </div>
+          <div class="about-bio">
+            <p class="about-lead">I am a PhD student and instructor in the <strong>Department of Communication</strong> at the University of Maryland, College Park, where I specialize in public relations, strategic communication, and digital rhetoric.</p>
+            <p>My research sits at the intersection of crisis communication, political communication, and digital humanities. I study how institutional actors such as government agencies, humanitarian organizations, and advocacy groups use social media and other digital tools to construct authority, foster empathy, build public trust, and mobilize support for affected communities during local and global crises. I also examine how they structure and frame their messaging to sustain engagement and invite meaningful public participation during disasters and emergencies.</p>
+            <p>This project extends my ongoing study of FEMA and the American Red Cross's wildfire communication, bringing digital studies and infrastructure theory into conversation with crisis communication scholarship to ask what we can and cannot know about institutional rhetoric in a post-API research environment.</p>
+            <div class="about-links">
+              <a href="https://www.linkedin.com/in/andrew-donkor/" target="_blank" rel="noopener" class="about-link">
+                <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-2-2 2 2 0 00-2 2v7h-4v-7a6 6 0 016-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+                LinkedIn
+              </a>
+              <a href="https://communication.umd.edu/directory/andrew-donkor" target="_blank" rel="noopener" class="about-link">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>
+                UMD Profile
+              </a>
+            </div>
+            <div class="about-affiliations">
+              <span class="affiliation-badge">University of Maryland</span>
+              <span class="affiliation-badge">Department of Communication</span>
+              <span class="affiliation-badge">MITH610 — Spring 2026</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ══════════════════════════════════════ BIBLIOGRAPHY ══ -->
+    <section class="section" id="bibliography">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">08 — Annotated Bibliography</span>
+          <h2 class="section-title">Sources &amp; Annotations</h2>
+          <p class="section-desc">All 19 sources in APA 7th edition with verified DOIs. Click any entry to expand the annotation.</p>
+        </div>
+        <div class="bib-list fade-in" id="bibList">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ════════════════════════════════════════════ FOOTER ══ -->
+  <footer class="site-footer">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <svg width="28" height="28" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+          <rect width="32" height="32" rx="8" fill="var(--color-primary)"/>
+          <path d="M8 22 L16 10 L24 22" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+          <path d="M11 18 L21 18" stroke="white" stroke-width="2" stroke-linecap="round"/>
+          <circle cx="16" cy="10" r="2" fill="white"/>
+        </svg>
+        <div>
+          <div class="footer-title">Rhetorical Infrastructure</div>
+          <div class="footer-sub">Andrew Donkor · MITH610 · University of Maryland · 2026</div>
+        </div>
+      </div>
+      <div class="footer-links">
+        <a href="https://www.instagram.com/fema" target="_blank" rel="noopener">FEMA Instagram</a>
+        <a href="https://www.instagram.com/americanredcross" target="_blank" rel="noopener">ARC Instagram</a>
+        <a href="https://x.com/fema" target="_blank" rel="noopener">FEMA on X</a>
+        <a href="https://x.com/RedCross" target="_blank" rel="noopener">ARC on X</a>
+      </div>
+      <p class="footer-note">Final digital project for MITH610: Introduction to Digital Studies in the Arts and Humanities, taught by Dr. Jeffrey Moro. University of Maryland, College Park.</p>
+    </div>
+  </footer>
+
+  <!-- ════════════════════════════════════ POST MODAL ══ -->
+  <div class="modal-overlay" id="postModalOverlay" hidden role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+    <div class="modal-box">
+      <button class="modal-close icon-btn" id="closeModal" aria-label="Close post">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div id="modalContent"></div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+<script data-pplx-inline-edit>
+(function(){
+  if(window===window.top)return;
+  function inlineAll(orig,clone){
+    if(orig.nodeType!==1)return;
+    try{
+      var cs=getComputedStyle(orig);
+      var t='';
+      for(var i=0;i<cs.length;i++){t+=cs[i]+':'+cs.getPropertyValue(cs[i])+';';}
+      clone.style.cssText=t;
+    }catch(e){}
+    var oc=orig.children,cc=clone.children;
+    for(var j=0;j<oc.length&&j<cc.length;j++){inlineAll(oc[j],cc[j]);}
+  }
+  function stripExternal(clone){
+    var imgs=clone.querySelectorAll('img');
+    for(var i=0;i<imgs.length;i++){
+      var s=imgs[i].getAttribute('src');
+      if(s&&!s.startsWith('data:'))imgs[i].removeAttribute('src');
+    }
+    var all=clone.querySelectorAll('*');
+    for(var i=0;i<all.length;i++){
+      var st=all[i].style.cssText;
+      if(st&&st.indexOf('url(')>=0){
+        all[i].style.cssText=st.replace(/url\(["']?(?!data:)[^)"']*["']?\)/gi,'none');
+      }
+    }
+  }
+  window.addEventListener('message',function(e){
+    if(!e.data||e.data.type!=='INLINE_EDIT_CAPTURE_REQUEST')return;
+    var scrollX=window.scrollX||window.pageXOffset||0;
+    var scrollY=window.scrollY||window.pageYOffset||0;
+    var w=window.innerWidth,h=window.innerHeight;
+    try{
+      var clone=document.documentElement.cloneNode(true);
+      var rm=clone.querySelectorAll('script,link[rel="stylesheet"],style');
+      for(var i=0;i<rm.length;i++){rm[i].remove();}
+      inlineAll(document.documentElement,clone);
+      stripExternal(clone);
+      var html=new XMLSerializer().serializeToString(clone);
+      var svg='<svg xmlns="http://www.w3.org/2000/svg" width="'+w+'" height="'+h+'">'
+        +'<foreignObject width="100%" height="100%">'
+        +'<div xmlns="http://www.w3.org/1999/xhtml" style="width:'+w+'px;height:'+h+'px;overflow:hidden">'
+        +'<div style="transform:translate(-'+scrollX+'px,-'+scrollY+'px);transform-origin:top left">'
+        +html+'</div></div></foreignObject></svg>';
+      var svgUrl='data:image/svg+xml;charset=utf-8,'+encodeURIComponent(svg);
+      var img=new Image();
+      img.onload=function(){
+        var c=document.createElement('canvas');c.width=w;c.height=h;
+        c.getContext('2d').drawImage(img,0,0);
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:c.toDataURL('image/png'),scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.onerror=function(){
+        window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+      };
+      img.src=svgUrl;
+    }catch(err){
+      window.parent.postMessage({type:'INLINE_EDIT_SCREENSHOT_RESULT',dataUrl:null,scrollX:scrollX,scrollY:scrollY},'*');
+    }
+  });
+})();
+</script></body>
+</html>
