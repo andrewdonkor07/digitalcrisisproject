@@ -1426,16 +1426,20 @@ a:hover { text-decoration-color: currentColor; }
 
 /* Hero: more dramatic gradient background */
 .hero {
-  background: linear-gradient(145deg,
-    oklch(0.96 0.018 80) 0%,
-    oklch(0.94 0.025 70) 40%,
-    oklch(0.92 0.032 60) 100%);
+  background:
+    linear-gradient(145deg,
+      oklch(0.96 0.018 80 / 0.82) 0%,
+      oklch(0.94 0.025 70 / 0.80) 40%,
+      oklch(0.92 0.032 60 / 0.78) 100%),
+    url('LA-Wildfire.jpg') center center / cover no-repeat;
 }
 [data-theme="dark"] .hero {
-  background: linear-gradient(145deg,
-    oklch(0.11 0.025 45) 0%,
-    oklch(0.09 0.03 40) 50%,
-    oklch(0.08 0.02 35) 100%);
+  background:
+    linear-gradient(145deg,
+      oklch(0.11 0.025 45 / 0.88) 0%,
+      oklch(0.09 0.03 40 / 0.86) 50%,
+      oklch(0.08 0.02 35 / 0.84) 100%),
+    url('LA-Wildfire.jpg') center center / cover no-repeat;
 }
 
 /* Section headers: add color accent line */
@@ -1496,11 +1500,13 @@ a:hover { text-decoration-color: currentColor; }
 /* Key findings: numbered items color */
 .finding-num {
   color: var(--color-fire);
-  font-size: var(--text-3xl);
+  font-size: var(--text-xl);
   font-weight: 900;
   font-family: var(--font-display);
   letter-spacing: -0.02em;
   opacity: 0.85;
+  min-width: 56px;
+  flex-shrink: 0;
 }
 
 /* About section: warmer photo ring */
@@ -1532,4 +1538,166 @@ a:hover { text-decoration-color: currentColor; }
     padding: var(--space-4);
   }
   .gstat-num { font-size: var(--text-xl); }
+}
+
+
+/* ═══════════════════ HISTORICAL CONTEXT ═══════════════════ */
+
+.hist-timeline {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin-top: var(--space-10);
+  padding-left: var(--space-8);
+  border-left: 3px solid var(--color-divider);
+}
+
+[data-theme="dark"] .hist-timeline {
+  border-left-color: oklch(0.3 0.02 50);
+}
+
+/* Animated left spine */
+.hist-timeline::before {
+  content: '';
+  position: absolute;
+  left: -3px;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: linear-gradient(to bottom,
+    var(--color-primary),
+    var(--color-fire),
+    #7c5cbf,
+    var(--color-arc),
+    var(--color-secondary),
+    var(--color-primary));
+  opacity: 0.5;
+}
+
+.hist-era {
+  position: relative;
+  display: grid;
+  grid-template-columns: 200px 1fr;
+  gap: var(--space-8);
+  padding: var(--space-8) 0;
+  border-bottom: 1px solid var(--color-divider);
+}
+
+.hist-era:last-child {
+  border-bottom: none;
+}
+
+/* Timeline dot */
+.hist-era::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--space-8) - 6px);
+  top: calc(var(--space-8) + 8px);
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--color-surface);
+  border: 3px solid var(--color-primary);
+  z-index: 1;
+}
+
+.hist-era:nth-child(2)::before { border-color: var(--color-primary); }
+.hist-era:nth-child(3)::before { border-color: var(--color-fire); }
+.hist-era:nth-child(4)::before { border-color: #2196f3; }
+.hist-era:nth-child(5)::before { border-color: var(--color-arc); }
+.hist-era:nth-child(6)::before { border-color: var(--color-secondary); }
+.hist-era-present::before      { border-color: var(--color-primary); background: var(--color-primary-highlight); }
+
+.hist-era-marker {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding-top: 2px;
+}
+
+.hist-era-date {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--color-text-muted);
+  letter-spacing: 0.01em;
+}
+
+.hist-era-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  width: fit-content;
+}
+
+.hist-badge-radio   { background: oklch(0.94 0.018 80);  color: oklch(0.35 0.06 65); }
+.hist-badge-web     { background: oklch(0.93 0.02 220);  color: oklch(0.3 0.07 230); }
+.hist-badge-open    { background: oklch(0.93 0.04 150);  color: oklch(0.3 0.1 145); }
+.hist-badge-covid   { background: oklch(0.92 0.03 265);  color: oklch(0.3 0.1 265); }
+.hist-badge-closed  { background: oklch(0.93 0.04 30);   color: oklch(0.35 0.1 30); }
+.hist-badge-present { background: var(--color-primary-highlight); color: var(--color-primary-active); }
+
+[data-theme="dark"] .hist-badge-radio   { background: oklch(0.22 0.03 65);  color: oklch(0.8 0.06 70); }
+[data-theme="dark"] .hist-badge-web     { background: oklch(0.2 0.03 220);  color: oklch(0.8 0.06 220); }
+[data-theme="dark"] .hist-badge-open    { background: oklch(0.2 0.05 150);  color: oklch(0.8 0.08 145); }
+[data-theme="dark"] .hist-badge-covid   { background: oklch(0.2 0.04 265);  color: oklch(0.8 0.06 265); }
+[data-theme="dark"] .hist-badge-closed  { background: oklch(0.2 0.05 30);   color: oklch(0.8 0.08 35); }
+[data-theme="dark"] .hist-badge-present { background: oklch(0.22 0.04 55);  color: oklch(0.85 0.08 60); }
+
+.hist-era-content {
+  padding-top: 0;
+}
+
+.hist-era-title {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.hist-era-content p {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  max-width: 68ch;
+}
+
+/* Present era gets a subtle highlight */
+.hist-era-present {
+  background: linear-gradient(135deg, var(--color-primary-highlight) 0%, transparent 60%);
+  border-radius: var(--radius-xl);
+  padding-left: var(--space-6);
+  margin-left: calc(-1 * var(--space-6));
+}
+
+[data-theme="dark"] .hist-era-present {
+  background: linear-gradient(135deg, oklch(0.18 0.04 55 / 0.5) 0%, transparent 60%);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hist-timeline {
+    padding-left: var(--space-6);
+  }
+  .hist-era {
+    grid-template-columns: 1fr;
+    gap: var(--space-3);
+  }
+  .hist-era::before {
+    left: calc(-1 * var(--space-6) - 6px);
+  }
+  .hist-era-marker {
+    flex-direction: row;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: var(--space-3);
+  }
 }
