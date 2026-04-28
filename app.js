@@ -862,3 +862,221 @@ sections.forEach(s => navObserver.observe(s));
 
 // Init Lucide icons if loaded
 if (typeof lucide !== 'undefined') lucide.createIcons();
+
+/* ═══════════════════════════════════════════════════
+   HISTORICAL CONTEXT — ERA CARDS
+═══════════════════════════════════════════════════ */
+const historicalEras = [
+  {
+    date: '1900s – 1980s',
+    badge: 'Pre-Digital',
+    badgeClass: 'hist-badge-radio',
+    accentColor: '#8a7060',
+    accentBg: '#f5ede6',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="28" height="28"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><circle cx="12" cy="13" r="2"/><path d="M2 7l4-4"/></svg>',
+    title: 'Radio, Wire Services, and the Birth of Official Disaster Communication',
+    summary: 'A structurally one-to-many broadcast model, embedded into the organizational logic of emergency management from its earliest forms.',
+    body: 'FEMA-equivalent agencies relied on radio broadcasts and wire service press releases to reach the public during emergencies. The communication model was structurally one-to-many: institutional authority transmitted downward to a passive public audience. Interactivity was impossible by design. This was not a technological accident but an infrastructural commitment — the broadcast model was embedded into the organizational logic of emergency management from its earliest institutional forms.',
+    projectLink: 'This era establishes the baseline rhetorical logic that persists across all subsequent media transformations: one institution speaks, a dispersed public receives. Understanding this originary structure is essential for interpreting why FEMA\'s logos-driven, procedural communication style in 2020–2025 still echoes the one-way authority model of mid-century radio broadcasts — even on a two-way social platform.',
+    scholars: 'Quarantelli (1988); Mileti (1999)',
+    scholarsDetail: 'Quarantelli\'s foundational work on disaster sociology established that institutional communication during crises consistently prioritizes authoritative top-down messaging. Mileti\'s Systems Theory of Disasters further codified the broadcast-authority model as the organizing principle of emergency management communication infrastructure.',
+    keyInsight: 'Institutional authority → passive public. Interactivity was architecturally forbidden, not merely absent.'
+  },
+  {
+    date: '1990s – 2000s',
+    badge: 'Early Internet',
+    badgeClass: 'hist-badge-web',
+    accentColor: '#2e6b4f',
+    accentBg: '#c8e0d4',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="28" height="28"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/></svg>',
+    title: 'Static Web and Email: A One-Way Web, Slightly Wider',
+    summary: 'Organizational websites and email expanded reach without altering broadcast logic. The infrastructure accreted along the same institutional tracks.',
+    body: 'Organizational websites and email lists expanded the reach of official disaster communication without fundamentally altering its broadcast logic. FEMA\'s post-9/11 web presence and the Red Cross\'s early online donation pages mark this transition. The infrastructure accreted historically: the new digital channels ran along the same institutional tracks as radio and wire, replicating the one-to-many authority relationship in a slightly wider medium. The architecture of the web\'s first decade rewarded institutional presence, not participatory exchange.',
+    projectLink: 'The early web era demonstrates Starosielski\'s core argument in practice: new infrastructure does not replace old infrastructure — it layers on top of it, inheriting its logics. FEMA and ARC\'s early web pages were essentially wire service releases converted to HTML. This accretion pattern explains why even the most sophisticated 2020–2025 social media posts still carry the rhetorical DNA of pre-digital crisis communication: procedural authority on one side, affected public on the other.',
+    scholars: 'Starosielski (2015); Hu (2015)',
+    scholarsDetail: 'Starosielski\'s concept of infrastructural accretion — derived from her study of undersea cable networks — is the organizing metaphor for this entire section. Hu\'s prehistory of the cloud demonstrates how each layer of networked computing infrastructure inherits the political and institutional logics of the layer beneath it.',
+    keyInsight: 'The web was wider than radio, but structurally it was the same message: institutions speak, publics receive links.'
+  },
+  {
+    date: '2009 – 2018',
+    badge: 'Open Social',
+    badgeClass: 'hist-badge-open',
+    accentColor: '#1d78c4',
+    accentBg: '#d6eaf5',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="28" height="28"><path d="M23 3a10.9 10.9 0 01-3.14 1.53 4.48 4.48 0 00-7.86 3v1A10.66 10.66 0 013 4s-4 9 5 13a11.64 11.64 0 01-7 2c9 5 20 0 20-11.5a4.5 4.5 0 00-.08-.83A7.72 7.72 0 0023 3z"/></svg>',
+    title: 'Twitter, Open APIs, and the First Wave of Social Crisis Communication',
+    summary: 'Twitter\'s open API produced a generation of SMCC scholarship. The "open era" flourished — and lasted barely a decade.',
+    body: 'Twitter\'s open API — launched in 2006 and fully matured by roughly 2009 — enabled large-scale automated data collection and produced a generation of crisis communication scholarship. The Social-Mediated Crisis Communication (SMCC) model (Austin et al., 2012, 2017) emerged from this period, theorizing how organizations and publics exchange information across networked platforms during emergencies. Landmark events — Hurricane Sandy (2012), the Boston Marathon bombing (2013) — were analyzed in near-real time. The open era of social media research flourished, and it lasted barely a decade.',
+    projectLink: 'This is the era in which this project\'s theoretical predecessors were built. The SMCC model — the primary crisis communication framework guiding the rhetorical analysis — was designed for, and empirically tested on, the open-API Twitter environment. When I apply SMCC to 2020–2025 posts collected through manual curation rather than automated API query, I am applying a framework built for different infrastructural conditions to a transformed medium. That methodological tension is not a flaw — it is the project\'s central analytical point.',
+    scholars: 'Austin et al. (2012, 2017); Jin, Liu & Austin (2014); Bruns (2019)',
+    scholarsDetail: 'Austin, Jin, and Liu\'s SMCC model was the defining theoretical product of the open-API era, offering a systematic account of how publics, organizations, and media interact during crises across social platforms. Bruns\'s retrospective analysis of the APIcalypse situates this era as a brief and historically specific window — not a permanent or "natural" state of social media research.',
+    keyInsight: 'The SMCC framework was calibrated to an open-API world that no longer exists. Applying it to 2020–2025 data reveals both its strengths and its infrastructural assumptions.'
+  },
+  {
+    date: '2020 – 2022',
+    badge: 'COVID Interregnum',
+    badgeClass: 'hist-badge-covid',
+    accentColor: '#7c5cbf',
+    accentBg: '#ece6f8',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="28" height="28"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/><circle cx="12" cy="12" r="2" fill="currentColor" stroke="none"/></svg>',
+    title: 'Pandemic Temporality Meets Wildfire Temporality on the Same Feeds',
+    summary: 'COVID-19\'s slow-moving chronic temporality intermingled with wildfire\'s burst temporality on the same institutional feeds, producing a historically unique crisis communication context.',
+    body: 'The 2020–2025 wildfire years cannot be understood apart from the COVID-19 pandemic. A slow-moving chronic emergency — with its own rhythms of case counts, policy announcements, and institutional messaging — intermingled on the same feeds with the localized, burst temporality of wildfire crises. FEMA and the American Red Cross navigated a double-disaster context in which their audiences were simultaneously processing pandemic fatigue and acute fire emergencies. X and Instagram became primary disaster information channels for many users for the first time during this period.',
+    projectLink: 'The COVID-19 interregnum produced several distinctive patterns visible in the 2020–2021 corpus. ARC innovated virtual volunteer networks (international video-conference-based), naming COVID-era collaboration across Japan and Korea. FEMA\'s September 2020 posts explicitly acknowledged mental health support alongside material aid, a rhetorical acknowledgment that would have been unusual before the pandemic normalized public discourse about collective psychological strain. Both organizations were navigating what I call "compounded crisis communication" — the rhetorical challenge of speaking simultaneously to two distinct crisis temporalities with incompatible urgency logics.',
+    scholars: 'Coombs (2022); Austin et al. (2017)',
+    scholarsDetail: 'Coombs\'s Ongoing Crisis Communication framework, updated through 2022, directly addresses how organizations must adapt messaging strategies when multiple crisis events overlap and public crisis fatigue becomes a communication variable. Austin et al.\'s (2017) SMCC revision acknowledges platform complexity but does not fully theorize the double-disaster context that defined 2020–2022.',
+    keyInsight: 'Two crisis temporalities, one feed. COVID made social media a primary public infrastructure just as wildfires demanded institutional crisis communication at unprecedented scale.'
+  },
+  {
+    date: '2022 – 2025',
+    badge: 'Platform Transformation',
+    badgeClass: 'hist-badge-closed',
+    accentColor: '#c0392b',
+    accentBg: '#fce9e7',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="28" height="28"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25z" fill="currentColor" stroke="none"/></svg>',
+    title: 'Elon Musk, API Closures, and the End of the Open Social Web',
+    summary: 'The 2023 API pricing changes made large-scale automated research impossible. Posts in this dataset were produced in radically different platform environments depending on their year.',
+    body: 'Elon Musk\'s acquisition of Twitter in October 2022 and the subsequent 2023 API pricing changes made automated large-scale data collection effectively impossible for academic researchers. What had been a shared research infrastructure — open, queryable, archivable — was closed behind paywalls that no university research budget could sustain. The posts in this dataset were produced in radically different platform environments depending on their year: some under conditions of relative platform openness, others under active institutional suppression of research access.',
+    projectLink: 'This transformation is not merely a methodological backstory. It is a substantive finding about crisis communication infrastructure. When Twitter became X, FEMA and ARC lost a predictable, relatively stable institutional communication environment and entered a platform defined by rapid policy change, declining institutional credibility signals (the end of legacy blue-check verification), and uncertain algorithmic distribution. The rhetorical strategies visible in 2023–2025 posts reflect organizations adapting in real time to a fundamentally less stable platform — while simultaneously facing the most destructive wildfire season in California history (2025 LA fires).',
+    scholars: 'Bruns (2019); Freelon (2018); boyd & Crawford (2012)',
+    scholarsDetail: 'Bruns names the APIcalypse and frames it as deliberate platform power rather than engineering necessity. Freelon names the post-API condition and calls for methodological reinvention. boyd and Crawford\'s earlier provocation about big data access inequalities anticipated exactly this structural moment: the normalization of unequal access to social data as a form of institutional power.',
+    keyInsight: 'API closure is platform power. The inability to study crisis communication at scale is itself a fact about how platforms exercise control over public knowledge.'
+  },
+  {
+    date: 'Post-2023',
+    badge: 'Present Condition',
+    badgeClass: 'hist-badge-present',
+    accentColor: '#b5640d',
+    accentBg: '#f0ddc8',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" width="28" height="28"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>',
+    title: 'Manual Curation as Disciplinary Response',
+    summary: 'This dataset was assembled through deliberate manual curation — a methodological contribution, not a limitation. Close reading is the DH tradition.',
+    body: 'This dataset was assembled through deliberate manual curation — a methodological response to the post-APIcalypse condition of social media research. This is not a limitation; it is a contribution. Following Bruns (2019), Freelon (2018), and Walsh (2023), I treat the act of careful, labor-intensive curation as itself a form of critical engagement with platform black-boxing. Close reading is a foundational method in the digital humanities tradition, and a dataset assembled by hand — with explicit selection criteria and documented provenance — may be epistemically stronger than one assembled by automated algorithm from an infrastructure designed to resist scholarly access.',
+    projectLink: 'The 240-post corpus was curated using explicit selection criteria: posts must be from the FEMA or ARC official accounts, published during the four named wildfire seasons, and directly address the wildfire event (not routine messaging). This principled selection produces a dataset with a demonstrably clear relationship between evidence and argument. Where automated collection produces scale at the cost of interpretive distance, manual curation produces interpretive proximity — each post in the dataset has been read, coded, and contextualized. Following Drucker (2011, 2020), this is capta, not data: the corpus was actively constructed by an interpreting researcher, not passively received from a neutral infrastructure.',
+    scholars: 'Bruns (2019); Freelon (2018); Walsh (2023); Drucker (2011, 2020)',
+    scholarsDetail: 'Bruns and Freelon establish the post-API condition as the methodological context. Walsh\'s contribution in Debates in the Digital Humanities 2023 argues that how we collect and cite social media data is itself a form of argumentation. Drucker\'s concept of capta — data as always-already interpreted — grounds the claim that this manually curated corpus is not a second-best substitute for automated collection but a different and equally rigorous epistemic object.',
+    keyInsight: 'Manual curation is not a workaround — it is a principled humanistic method. The 240 posts in this dataset have been read, not just counted.'
+  }
+];
+
+/* ─── Render era cards ─── */
+const histErasGrid = document.getElementById('histErasGrid');
+const histDetailPanel = document.getElementById('histDetailPanel');
+const histPanelInner = document.getElementById('histPanelInner');
+const closeHistPanel = document.getElementById('closeHistPanel');
+let activeEraCard = null;
+
+function openHistEra(i, card) {
+  const era = historicalEras[i];
+
+  // Toggle off if same card clicked
+  if (activeEraCard === card && !histDetailPanel.hidden) {
+    histDetailPanel.hidden = true;
+    card.classList.remove('active');
+    card.setAttribute('aria-expanded', 'false');
+    activeEraCard = null;
+    // Deactivate accretion node
+    document.querySelectorAll('.hist-accretion-node').forEach(n => n.classList.remove('active'));
+    return;
+  }
+
+  // Deactivate previous
+  if (activeEraCard) {
+    activeEraCard.classList.remove('active');
+    activeEraCard.setAttribute('aria-expanded', 'false');
+  }
+  activeEraCard = card;
+  card.classList.add('active');
+  card.setAttribute('aria-expanded', 'true');
+
+  // Highlight accretion node
+  document.querySelectorAll('.hist-accretion-node').forEach((n, idx) => {
+    n.classList.toggle('active', idx === i);
+  });
+
+  histPanelInner.innerHTML = `
+    <div class="hist-panel-header">
+      <div style="display:flex;align-items:center;gap:var(--space-3);flex-wrap:wrap;margin-bottom:var(--space-3)">
+        <span class="hist-era-badge ${era.badgeClass}" style="font-size:0.75rem">${era.badge}</span>
+        <span style="font-size:var(--text-sm);color:var(--color-text-muted);font-weight:600">${era.date}</span>
+      </div>
+      <h3 style="font-family:var(--font-display);font-size:var(--text-lg);font-weight:800;color:var(--color-text);margin-bottom:var(--space-4);letter-spacing:-0.02em;line-height:1.25">${era.title}</h3>
+    </div>
+
+    <div class="hist-panel-body">
+      <div class="hist-panel-col hist-panel-col-main">
+        <h4 class="hist-panel-subhead">Historical Account</h4>
+        <p style="font-size:var(--text-sm);line-height:1.85;color:var(--color-text-muted)">${era.body}</p>
+
+        <div class="hist-insight-box" style="--era-color:${era.accentColor};--era-bg:${era.accentBg}">
+          <span class="hist-insight-label">Key Insight</span>
+          <p>${era.keyInsight}</p>
+        </div>
+      </div>
+
+      <div class="hist-panel-col hist-panel-col-side">
+        <div class="hist-panel-connection">
+          <h4 class="hist-panel-subhead">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/></svg>
+            Connection to This Project
+          </h4>
+          <p style="font-size:var(--text-sm);line-height:1.85;color:var(--color-text-muted)">${era.projectLink}</p>
+        </div>
+
+        <div class="hist-panel-scholars">
+          <h4 class="hist-panel-subhead">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="14" height="14"><path d="M4 19.5A2.5 2.5 0 016.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 014 19.5v-15A2.5 2.5 0 016.5 2z"/></svg>
+            Key Scholars
+          </h4>
+          <p class="hist-scholars-names" style="--era-color:${era.accentColor}">${era.scholars}</p>
+          <p style="font-size:var(--text-xs);line-height:1.75;color:var(--color-text-faint);margin-top:var(--space-2)">${era.scholarsDetail}</p>
+        </div>
+      </div>
+    </div>
+  `;
+
+  histDetailPanel.hidden = false;
+  histDetailPanel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+if (histErasGrid) {
+  historicalEras.forEach((era, i) => {
+    const card = document.createElement('div');
+    card.className = 'hist-era-card';
+    card.setAttribute('role', 'button');
+    card.setAttribute('tabindex', '0');
+    card.setAttribute('aria-expanded', 'false');
+    card.style.setProperty('--era-color', era.accentColor);
+    card.style.setProperty('--era-bg', era.accentBg);
+    card.dataset.index = i;
+    card.innerHTML = `
+      <div class="hist-era-card-top">
+        <div class="hist-era-card-icon" aria-hidden="true">${era.icon}</div>
+        <div style="flex:1;min-width:0">
+          <span class="hist-era-badge ${era.badgeClass}">${era.badge}</span>
+          <div class="hist-era-card-date">${era.date}</div>
+        </div>
+        <svg class="hist-era-expand-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18" aria-hidden="true"><path d="M9 18l6-6-6-6"/></svg>
+      </div>
+      <h3 class="hist-era-card-title">${era.title}</h3>
+      <p class="hist-era-card-summary">${era.summary}</p>
+      <div class="hist-era-card-scholars">${era.scholars}</div>
+    `;
+    card.addEventListener('click', () => openHistEra(i, card));
+    card.addEventListener('keydown', e => {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openHistEra(i, card); }
+    });
+    // Also wire accretion node click
+    const node = document.querySelector(`.hist-accretion-node[data-era="${i}"]`);
+    if (node) node.addEventListener('click', () => { card.click(); card.scrollIntoView({ behavior: 'smooth', block: 'center' }); });
+    histErasGrid.appendChild(card);
+  });
+}
+
+if (closeHistPanel) {
+  closeHistPanel.addEventListener('click', () => {
+    histDetailPanel.hidden = true;
+    if (activeEraCard) { activeEraCard.classList.remove('active'); activeEraCard.setAttribute('aria-expanded', 'false'); activeEraCard = null; }
+    document.querySelectorAll('.hist-accretion-node').forEach(n => n.classList.remove('active'));
+  });
+}

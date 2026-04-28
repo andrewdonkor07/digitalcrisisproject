@@ -1543,161 +1543,356 @@ a:hover { text-decoration-color: currentColor; }
 
 /* ═══════════════════ HISTORICAL CONTEXT ═══════════════════ */
 
-.hist-timeline {
+/* ── Accretion progress bar ── */
+.hist-accretion-bar {
+  margin: var(--space-8) 0 var(--space-10);
+}
+
+.hist-accretion-track {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   position: relative;
+  padding: 0 var(--space-4);
+}
+
+.hist-accretion-track::before {
+  content: '';
+  position: absolute;
+  left: var(--space-4);
+  right: var(--space-4);
+  top: 50%;
+  transform: translateY(-50%);
+  height: 3px;
+  background: linear-gradient(to right,
+    #8a7060, #2e6b4f, #1d78c4, #7c5cbf, #c0392b, #b5640d);
+  border-radius: 99px;
+  opacity: 0.4;
+  z-index: 0;
+}
+
+.hist-accretion-node {
+  position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
-  gap: 0;
-  margin-top: var(--space-10);
-  padding-left: var(--space-8);
-  border-left: 3px solid var(--color-divider);
+  align-items: center;
+  gap: var(--space-2);
+  cursor: pointer;
+  transition: transform 0.2s ease;
 }
 
-[data-theme="dark"] .hist-timeline {
-  border-left-color: oklch(0.3 0.02 50);
-}
-
-/* Animated left spine */
-.hist-timeline::before {
+.hist-accretion-node::before {
   content: '';
-  position: absolute;
-  left: -3px;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background: linear-gradient(to bottom,
-    var(--color-primary),
-    var(--color-fire),
-    #7c5cbf,
-    var(--color-arc),
-    var(--color-secondary),
-    var(--color-primary));
-  opacity: 0.5;
-}
-
-.hist-era {
-  position: relative;
-  display: grid;
-  grid-template-columns: 200px 1fr;
-  gap: var(--space-8);
-  padding: var(--space-8) 0;
-  border-bottom: 1px solid var(--color-divider);
-}
-
-.hist-era:last-child {
-  border-bottom: none;
-}
-
-/* Timeline dot */
-.hist-era::before {
-  content: '';
-  position: absolute;
-  left: calc(-1 * var(--space-8) - 6px);
-  top: calc(var(--space-8) + 8px);
-  width: 12px;
-  height: 12px;
+  display: block;
+  width: 14px;
+  height: 14px;
   border-radius: 50%;
   background: var(--color-surface);
-  border: 3px solid var(--color-primary);
-  z-index: 1;
+  border: 3px solid var(--color-divider);
+  transition: all 0.25s ease;
 }
 
-.hist-era:nth-child(2)::before { border-color: var(--color-primary); }
-.hist-era:nth-child(3)::before { border-color: var(--color-fire); }
-.hist-era:nth-child(4)::before { border-color: #2196f3; }
-.hist-era:nth-child(5)::before { border-color: var(--color-arc); }
-.hist-era:nth-child(6)::before { border-color: var(--color-secondary); }
-.hist-era-present::before      { border-color: var(--color-primary); background: var(--color-primary-highlight); }
+.hist-accretion-node span {
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: var(--color-text-faint);
+  white-space: nowrap;
+  transition: color 0.25s ease;
+}
 
-.hist-era-marker {
+.hist-accretion-node:hover::before,
+.hist-accretion-node.active::before {
+  border-color: var(--color-primary);
+  background: var(--color-primary);
+  transform: scale(1.35);
+}
+
+.hist-accretion-node:hover span,
+.hist-accretion-node.active span {
+  color: var(--color-primary);
+}
+
+.hist-accretion-now::before {
+  border-color: var(--color-fire);
+  background: var(--color-fire-highlight);
+}
+
+.hist-accretion-now.active::before {
+  background: var(--color-fire);
+  border-color: var(--color-fire);
+}
+
+/* ── Era cards grid ── */
+.hist-eras-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+
+.hist-era-card {
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-top: 3px solid var(--era-color, var(--color-primary));
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  cursor: pointer;
+  transition: box-shadow 0.2s ease, border-color 0.2s ease, transform 0.2s ease, background 0.2s ease;
+  position: relative;
   display: flex;
   flex-direction: column;
-  gap: var(--space-2);
-  padding-top: 2px;
+  gap: var(--space-3);
 }
 
-.hist-era-date {
-  font-family: var(--font-display);
-  font-size: var(--text-sm);
+.hist-era-card:hover {
+  box-shadow: var(--shadow-md);
+  border-color: var(--era-color, var(--color-primary));
+  transform: translateY(-2px);
+}
+
+.hist-era-card.active {
+  background: var(--era-bg, var(--color-primary-highlight));
+  border-color: var(--era-color, var(--color-primary));
+  box-shadow: 0 0 0 3px oklch(from var(--era-color, #b5640d) l c h / 0.15), var(--shadow-md);
+}
+
+/* Fallback for older browsers that don't support CSS oklch with relative color syntax */
+.hist-era-card.active {
+  box-shadow: var(--shadow-md);
+}
+
+.hist-era-card-top {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-3);
+}
+
+.hist-era-card-icon {
+  color: var(--era-color, var(--color-primary));
+  flex-shrink: 0;
+  opacity: 0.85;
+  transition: opacity 0.2s;
+}
+
+.hist-era-card:hover .hist-era-card-icon,
+.hist-era-card.active .hist-era-card-icon {
+  opacity: 1;
+}
+
+.hist-era-card-date {
+  font-size: 0.72rem;
   font-weight: 700;
   color: var(--color-text-muted);
-  letter-spacing: 0.01em;
+  letter-spacing: 0.03em;
+  margin-top: var(--space-1);
 }
 
-.hist-era-badge {
-  display: inline-block;
-  padding: 3px 10px;
-  border-radius: var(--radius-full);
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  width: fit-content;
+.hist-era-expand-icon {
+  color: var(--color-text-faint);
+  flex-shrink: 0;
+  margin-top: 2px;
+  transition: transform 0.25s ease, color 0.2s;
 }
 
-.hist-badge-radio   { background: oklch(0.94 0.018 80);  color: oklch(0.35 0.06 65); }
-.hist-badge-web     { background: oklch(0.93 0.02 220);  color: oklch(0.3 0.07 230); }
-.hist-badge-open    { background: oklch(0.93 0.04 150);  color: oklch(0.3 0.1 145); }
-.hist-badge-covid   { background: oklch(0.92 0.03 265);  color: oklch(0.3 0.1 265); }
-.hist-badge-closed  { background: oklch(0.93 0.04 30);   color: oklch(0.35 0.1 30); }
-.hist-badge-present { background: var(--color-primary-highlight); color: var(--color-primary-active); }
-
-[data-theme="dark"] .hist-badge-radio   { background: oklch(0.22 0.03 65);  color: oklch(0.8 0.06 70); }
-[data-theme="dark"] .hist-badge-web     { background: oklch(0.2 0.03 220);  color: oklch(0.8 0.06 220); }
-[data-theme="dark"] .hist-badge-open    { background: oklch(0.2 0.05 150);  color: oklch(0.8 0.08 145); }
-[data-theme="dark"] .hist-badge-covid   { background: oklch(0.2 0.04 265);  color: oklch(0.8 0.06 265); }
-[data-theme="dark"] .hist-badge-closed  { background: oklch(0.2 0.05 30);   color: oklch(0.8 0.08 35); }
-[data-theme="dark"] .hist-badge-present { background: oklch(0.22 0.04 55);  color: oklch(0.85 0.08 60); }
-
-.hist-era-content {
-  padding-top: 0;
+.hist-era-card.active .hist-era-expand-icon {
+  transform: rotate(90deg);
+  color: var(--era-color, var(--color-primary));
 }
 
-.hist-era-title {
+.hist-era-card-title {
   font-family: var(--font-display);
-  font-size: var(--text-base);
+  font-size: var(--text-sm);
   font-weight: 800;
   color: var(--color-text);
-  margin-bottom: var(--space-3);
   line-height: 1.3;
   letter-spacing: -0.01em;
+  margin: 0;
 }
 
-.hist-era-content p {
-  font-size: var(--text-sm);
+.hist-era-card-summary {
+  font-size: var(--text-xs);
   color: var(--color-text-muted);
-  line-height: 1.8;
-  max-width: 68ch;
+  line-height: 1.7;
+  margin: 0;
+  flex: 1;
 }
 
-/* Present era gets a subtle highlight */
-.hist-era-present {
-  background: linear-gradient(135deg, var(--color-primary-highlight) 0%, transparent 60%);
-  border-radius: var(--radius-xl);
-  padding-left: var(--space-6);
-  margin-left: calc(-1 * var(--space-6));
+.hist-era-card-scholars {
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: var(--era-color, var(--color-primary));
+  letter-spacing: 0.03em;
+  border-top: 1px solid var(--color-divider);
+  padding-top: var(--space-2);
+  margin-top: auto;
 }
 
-[data-theme="dark"] .hist-era-present {
-  background: linear-gradient(135deg, oklch(0.18 0.04 55 / 0.5) 0%, transparent 60%);
+/* Era badge variants */
+.hist-era-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: var(--radius-full);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  width: fit-content;
+  line-height: 1.6;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .hist-timeline {
-    padding-left: var(--space-6);
+.hist-badge-radio   { background: #f5ede6; color: #6b4a38; }
+.hist-badge-web     { background: #c8e0d4; color: #1e4e39; }
+.hist-badge-open    { background: #d6eaf5; color: #1a5a8c; }
+.hist-badge-covid   { background: #ece6f8; color: #5a3d9a; }
+.hist-badge-closed  { background: #fce9e7; color: #8e2b20; }
+.hist-badge-present { background: var(--color-primary-highlight); color: var(--color-primary-active); }
+
+[data-theme="dark"] .hist-badge-radio   { background: oklch(0.22 0.03 50);  color: oklch(0.82 0.06 55); }
+[data-theme="dark"] .hist-badge-web     { background: oklch(0.2 0.04 150);  color: oklch(0.82 0.08 145); }
+[data-theme="dark"] .hist-badge-open    { background: oklch(0.2 0.04 230);  color: oklch(0.82 0.07 225); }
+[data-theme="dark"] .hist-badge-covid   { background: oklch(0.2 0.05 290);  color: oklch(0.82 0.07 285); }
+[data-theme="dark"] .hist-badge-closed  { background: oklch(0.2 0.05 25);   color: oklch(0.82 0.08 30); }
+[data-theme="dark"] .hist-badge-present { background: oklch(0.22 0.04 55);  color: oklch(0.85 0.08 60); }
+
+/* ── Detail panel ── */
+.hist-detail-panel {
+  position: relative;
+  background: var(--color-surface);
+  border: 1.5px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: clamp(var(--space-6), 3vw, var(--space-10));
+  margin-top: var(--space-4);
+  animation: panelSlideIn 0.25s ease;
+}
+
+@keyframes panelSlideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.hist-panel-close {
+  position: absolute;
+  top: var(--space-4);
+  right: var(--space-4);
+}
+
+.hist-panel-body {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(var(--space-6), 4vw, var(--space-10));
+  margin-top: var(--space-6);
+}
+
+.hist-panel-col {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-6);
+}
+
+.hist-panel-subhead {
+  font-family: var(--font-display);
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-2);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+
+.hist-insight-box {
+  background: var(--era-bg, var(--color-primary-highlight));
+  border-left: 3px solid var(--era-color, var(--color-primary));
+  border-radius: 0 var(--radius-md) var(--radius-md) 0;
+  padding: var(--space-4) var(--space-5);
+}
+
+.hist-insight-label {
+  display: block;
+  font-size: 0.66rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--era-color, var(--color-primary));
+  margin-bottom: var(--space-2);
+}
+
+.hist-insight-box p {
+  font-size: var(--text-sm);
+  font-style: italic;
+  color: var(--color-text);
+  line-height: 1.65;
+  font-weight: 500;
+  margin: 0;
+  max-width: none;
+}
+
+.hist-panel-connection,
+.hist-panel-scholars {
+  background: var(--color-surface-offset);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4) var(--space-5);
+}
+
+.hist-scholars-names {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--era-color, var(--color-primary));
+  margin-bottom: var(--space-1);
+}
+
+/* ── Dark mode adjustments ── */
+[data-theme="dark"] .hist-era-card {
+  background: var(--color-surface);
+  border-color: oklch(0.28 0.02 50);
+}
+
+[data-theme="dark"] .hist-era-card.active {
+  background: oklch(0.18 0.025 55);
+}
+
+[data-theme="dark"] .hist-detail-panel {
+  background: var(--color-surface);
+  border-color: oklch(0.28 0.02 50);
+}
+
+[data-theme="dark"] .hist-panel-connection,
+[data-theme="dark"] .hist-panel-scholars {
+  background: oklch(0.16 0.02 50);
+}
+
+[data-theme="dark"] .hist-insight-box {
+  background: oklch(0.18 0.03 55);
+}
+
+[data-theme="dark"] .hist-accretion-node::before {
+  background: oklch(0.14 0.02 50);
+  border-color: oklch(0.35 0.02 50);
+}
+
+/* ── Responsive ── */
+@media (max-width: 900px) {
+  .hist-eras-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
-  .hist-era {
+  .hist-panel-body {
     grid-template-columns: 1fr;
-    gap: var(--space-3);
   }
-  .hist-era::before {
-    left: calc(-1 * var(--space-6) - 6px);
+}
+
+@media (max-width: 600px) {
+  .hist-eras-grid {
+    grid-template-columns: 1fr;
   }
-  .hist-era-marker {
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: var(--space-3);
+  .hist-accretion-track {
+    justify-content: space-around;
+    padding: 0;
+  }
+  .hist-accretion-node span {
+    font-size: 0.6rem;
   }
 }

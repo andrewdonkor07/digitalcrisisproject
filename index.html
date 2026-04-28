@@ -318,84 +318,34 @@
         <div class="section-header fade-in">
           <span class="section-eyebrow">03 — Historical Context</span>
           <h2 class="section-title">Communications Infrastructures Accrete</h2>
-          <p class="section-desc">Situating the 2020–2025 dataset within two longer temporal arcs: the layered history of disaster communication media, and the compressed arc of social media's open-to-closed transformation. Following Starosielski (2015): infrastructures do not replace one another — they accrete.</p>
+          <p class="section-desc">Situating the 2020–2025 dataset within two longer temporal arcs: the layered history of disaster communication media, and the compressed arc of social media's open-to-closed transformation. Following Starosielski (2015): infrastructures do not replace one another — they accrete. <strong>Click any era to explore its significance for this project.</strong></p>
         </div>
 
-        <div class="hist-timeline fade-in">
-
-          <!-- Era 1 -->
-          <div class="hist-era">
-            <div class="hist-era-marker">
-              <span class="hist-era-date">1900s – 1980s</span>
-              <span class="hist-era-badge hist-badge-radio">Pre-Digital</span>
-            </div>
-            <div class="hist-era-content">
-              <h3 class="hist-era-title">Radio, Wire Services, and the Birth of Official Disaster Communication</h3>
-              <p>FEMA-equivalent agencies relied on radio broadcasts and wire service press releases to reach the public during emergencies. The communication model was structurally one-to-many: institutional authority transmitted downward to a passive public audience. Interactivity was impossible by design. This was not a technological accident but an infrastructural commitment — the broadcast model was embedded into the organizational logic of emergency management from its earliest institutional forms (Quarantelli, 1988; Mileti, 1999).</p>
-            </div>
+        <!-- Accretion progress bar -->
+        <div class="hist-accretion-bar fade-in" aria-hidden="true">
+          <div class="hist-accretion-track">
+            <div class="hist-accretion-node" data-era="0"><span>1900s</span></div>
+            <div class="hist-accretion-node" data-era="1"><span>1990s</span></div>
+            <div class="hist-accretion-node" data-era="2"><span>2009</span></div>
+            <div class="hist-accretion-node" data-era="3"><span>2020</span></div>
+            <div class="hist-accretion-node" data-era="4"><span>2022</span></div>
+            <div class="hist-accretion-node hist-accretion-now" data-era="5"><span>Now</span></div>
           </div>
+        </div>
 
-          <!-- Era 2 -->
-          <div class="hist-era">
-            <div class="hist-era-marker">
-              <span class="hist-era-date">1990s – 2000s</span>
-              <span class="hist-era-badge hist-badge-web">Early Internet</span>
-            </div>
-            <div class="hist-era-content">
-              <h3 class="hist-era-title">Static Web and Email: A One-Way Web, Slightly Wider</h3>
-              <p>Organizational websites and email lists expanded the reach of official disaster communication without fundamentally altering its broadcast logic. FEMA's post-9/11 web presence and the Red Cross's early online donation pages mark this transition. The infrastructure accreted historically: the new digital channels ran along the same institutional tracks as radio and wire, replicating the one-to-many authority relationship in a slightly wider medium. The architecture of the web's first decade rewarded institutional presence, not participatory exchange.</p>
-            </div>
-          </div>
+        <!-- Era cards grid -->
+        <div class="hist-eras-grid fade-in" id="histErasGrid">
+          <!-- Injected by JS -->
+        </div>
 
-          <!-- Era 3 -->
-          <div class="hist-era">
-            <div class="hist-era-marker">
-              <span class="hist-era-date">2009 – 2018</span>
-              <span class="hist-era-badge hist-badge-open">Open Social</span>
-            </div>
-            <div class="hist-era-content">
-              <h3 class="hist-era-title">Twitter, Open APIs, and the First Wave of Social Crisis Communication</h3>
-              <p>Twitter's open API — launched in 2006 and fully matured by roughly 2009 — enabled large-scale automated data collection and produced a generation of crisis communication scholarship. The Social-Mediated Crisis Communication (SMCC) model (Austin et al., 2012, 2017) emerged from this period, theorizing how organizations and publics exchange information across networked platforms during emergencies. Landmark events — Hurricane Sandy (2012), the Boston Marathon bombing (2013) — were analyzed in near-real time. The open era of social media research flourished, and it lasted barely a decade.</p>
-            </div>
-          </div>
+        <!-- Detail panel -->
+        <div class="hist-detail-panel" id="histDetailPanel" hidden>
+          <button class="hist-panel-close icon-btn" id="closeHistPanel" aria-label="Close era detail">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+          </button>
+          <div class="hist-panel-inner" id="histPanelInner"></div>
+        </div>
 
-          <!-- Era 4 -->
-          <div class="hist-era">
-            <div class="hist-era-marker">
-              <span class="hist-era-date">2020 – 2022</span>
-              <span class="hist-era-badge hist-badge-covid">COVID Interregnum</span>
-            </div>
-            <div class="hist-era-content">
-              <h3 class="hist-era-title">Pandemic Temporality Meets Wildfire Temporality on the Same Feeds</h3>
-              <p>The 2020–2025 wildfire years cannot be understood apart from the COVID-19 pandemic. A slow-moving chronic emergency — with its own rhythms of case counts, policy announcements, and institutional messaging — intermingled on the same feeds with the localized, burst temporality of wildfire crises. FEMA and the American Red Cross navigated a double-disaster context in which their audiences were simultaneously processing pandemic fatigue and acute fire emergencies. X and Instagram became primary disaster information channels for many users for the first time during this period.</p>
-            </div>
-          </div>
-
-          <!-- Era 5 -->
-          <div class="hist-era">
-            <div class="hist-era-marker">
-              <span class="hist-era-date">2022 – 2025</span>
-              <span class="hist-era-badge hist-badge-closed">Platform Transformation</span>
-            </div>
-            <div class="hist-era-content">
-              <h3 class="hist-era-title">Elon Musk, API Closures, and the End of the Open Social Web</h3>
-              <p>Elon Musk's acquisition of Twitter in October 2022 and the subsequent 2023 API pricing changes made automated large-scale data collection effectively impossible for academic researchers (Freelon, 2018; Bruns, 2019). What had been a shared research infrastructure — open, queryable, archivable — was closed behind paywalls that no university research budget could sustain. The posts in this dataset were produced in radically different platform environments depending on their year: some under conditions of relative platform openness, others under active institutional suppression of research access.</p>
-            </div>
-          </div>
-
-          <!-- Era 6 -->
-          <div class="hist-era hist-era-present">
-            <div class="hist-era-marker">
-              <span class="hist-era-date">Post-2023</span>
-              <span class="hist-era-badge hist-badge-present">Present Condition</span>
-            </div>
-            <div class="hist-era-content">
-              <h3 class="hist-era-title">Manual Curation as Disciplinary Response</h3>
-              <p>This dataset was assembled through deliberate manual curation — a methodological response to the post-APIcalypse condition of social media research. This is not a limitation; it is a contribution. Following Bruns (2019), Freelon (2018), and Walsh (2023), I treat the act of careful, labor-intensive curation as itself a form of critical engagement with platform black-boxing (Chun, 2011; Gillespie, 2014). Close reading is a foundational method in the digital humanities tradition (Drucker, 2012), and a dataset assembled by hand — with explicit selection criteria and documented provenance — may be epistemically stronger than one scraped by algorithm from an infrastructure designed to resist scholarly access.</p>
-            </div>
-          </div>
-
-        </div><!-- /hist-timeline -->
       </div>
     </section>
 
