@@ -19,6 +19,117 @@
   <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
 
   <link rel="stylesheet" href="style.css" />
+
+  <style>
+    /* ── Scholarly Essay Additions ── */
+    .essay-prose { max-width: 780px; }
+    .essay-prose p { font-size: 1.02rem; line-height: 1.85; margin-bottom: 1.35rem; color: var(--color-text); }
+    .essay-prose h3 { font-family: 'Instrument Serif', serif; font-size: 1.4rem; font-style: italic; margin: 2.5rem 0 0.9rem; color: var(--color-heading); }
+    .essay-prose h4 { font-size: 1rem; font-weight: 700; margin: 1.8rem 0 0.5rem; color: var(--color-heading); letter-spacing: -0.01em; }
+    .essay-prose blockquote { border-left: 3px solid var(--color-primary); padding: 0.8rem 1.4rem; margin: 1.8rem 0; background: var(--color-surface); border-radius: 0 8px 8px 0; font-style: italic; color: var(--color-text-muted); }
+    .essay-prose blockquote cite { display: block; margin-top: 0.5rem; font-style: normal; font-size: 0.82rem; font-weight: 600; color: var(--color-text-muted); }
+
+    /* RQ Cards */
+    .rq-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px,1fr)); gap: 1.25rem; margin: 2rem 0; }
+    .rq-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 1.5rem; }
+    .rq-num { font-size: 0.7rem; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--color-primary); margin-bottom: 0.5rem; }
+    .rq-card p { font-size: 0.94rem; line-height: 1.65; margin: 0; color: var(--color-text-muted); }
+
+    /* Method Steps */
+    .method-steps { display: grid; gap: 1.4rem; margin: 2rem 0; }
+    .method-step { display: grid; grid-template-columns: 48px 1fr; gap: 1rem; align-items: start; }
+    .method-step-num { width: 48px; height: 48px; background: var(--color-primary); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; flex-shrink: 0; }
+    .method-step-body h4 { margin: 0 0 0.35rem; font-size: 0.98rem; font-weight: 700; }
+    .method-step-body p { margin: 0; font-size: 0.9rem; line-height: 1.65; color: var(--color-text-muted); }
+
+    /* Qualitative defense callout */
+    .qual-callout { background: var(--color-surface); border: 1.5px solid var(--color-primary); border-radius: 14px; padding: 1.75rem 2rem; margin: 2.5rem 0; }
+    .qual-callout-title { font-family: 'Instrument Serif', serif; font-size: 1.25rem; margin: 0 0 0.9rem; }
+    .qual-callout p { font-size: 0.94rem; line-height: 1.78; margin-bottom: 0.9rem; color: var(--color-text); }
+    .qual-callout p:last-child { margin-bottom: 0; }
+    .qual-callout .scholar-quote { font-style: italic; color: var(--color-text-muted); border-left: 3px solid var(--color-primary); padding-left: 1rem; margin-top: 1rem; font-size: 0.92rem; }
+
+    /* Data table */
+    .data-table-wrap { overflow-x: auto; margin: 1.5rem 0; }
+    .data-table { width: 100%; border-collapse: collapse; font-size: 0.9rem; }
+    .data-table th { background: var(--color-primary); color: #fff; padding: 0.65rem 1rem; text-align: left; font-weight: 700; }
+    .data-table td { padding: 0.6rem 1rem; border-bottom: 1px solid var(--color-border); }
+    .data-table tr:last-child td { font-weight: 700; background: var(--color-surface); border-bottom: none; }
+
+    /* Platform tab bar */
+    .platform-tabs { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 0.75rem; }
+    .platform-tab { padding: 0.45rem 1.1rem; border-radius: 99px; border: 1.5px solid var(--color-border); background: var(--color-bg); cursor: pointer; font-size: 0.83rem; font-weight: 600; display: inline-flex; align-items: center; gap: 0.4rem; transition: all 0.2s; color: var(--color-text); }
+    .platform-tab:hover { background: var(--color-surface); }
+    .platform-tab.active { background: var(--color-primary); color: #fff; border-color: var(--color-primary); }
+
+    /* IG badge */
+    .ig-badge { display: inline-flex; align-items: center; gap: 3px; background: linear-gradient(135deg,#833AB4,#FD1D1D,#F77737); color: #fff; padding: 0.1rem 0.45rem; border-radius: 99px; font-size: 0.66rem; font-weight: 700; vertical-align: middle; }
+
+    /* Discussion & Conclusion blocks */
+    .finding-callout { background: var(--color-surface); border-left: 4px solid var(--color-primary); border-radius: 0 10px 10px 0; padding: 1.2rem 1.5rem; margin: 1.5rem 0; }
+    .finding-callout h4 { margin: 0 0 0.4rem; font-size: 0.97rem; font-weight: 700; }
+    .finding-callout p { margin: 0; font-size: 0.92rem; line-height: 1.65; color: var(--color-text-muted); }
+    .conclusion-highlight { background: var(--color-primary); color: #fff; border-radius: 14px; padding: 2rem 2.25rem; margin: 2.5rem 0; }
+    .conclusion-highlight h3 { color: #fff; font-family: 'Instrument Serif', serif; font-size: 1.4rem; margin: 0 0 0.75rem; }
+    .conclusion-highlight p { color: rgba(255,255,255,0.9); font-size: 0.96rem; line-height: 1.8; margin: 0; }
+
+    /* Tools grid */
+    .tools-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px,1fr)); gap: 1.2rem; margin: 2rem 0; }
+    .tool-card { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 12px; padding: 1.4rem; transition: transform 0.2s, box-shadow 0.2s; }
+    .tool-card:hover { transform: translateY(-3px); box-shadow: 0 8px 24px rgba(0,0,0,.09); }
+    .tool-icon { font-size: 1.8rem; margin-bottom: 0.7rem; }
+    .tool-card h4 { font-size: 0.97rem; font-weight: 700; margin: 0 0 0.35rem; }
+    .tool-card p { font-size: 0.85rem; color: var(--color-text-muted); line-height: 1.6; margin: 0; }
+    .tool-tag { display: inline-block; margin-top: 0.6rem; font-size: 0.72rem; font-weight: 600; padding: 0.15rem 0.55rem; border-radius: 99px; background: var(--color-primary-highlight, #fde8db); color: var(--color-primary); }
+  </style>
+
+  <style>
+    /* Wildfire hero background */
+    .hero {
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image: url('wildfire-la-aerial.jpg');
+      background-size: cover;
+      background-position: center 40%;
+      opacity: 0.18;
+      z-index: 0;
+    }
+    [data-theme="dark"] .hero::before { opacity: 0.28; }
+    .hero-bg-grid { display: none !important; }
+    .hero-content, .hero-visual { position: relative; z-index: 1; }
+
+    /* Section ordering numbers fix */
+    .section-eyebrow { font-size: 0.72rem; font-weight: 800; letter-spacing: 0.12em; text-transform: uppercase; color: var(--color-primary); margin-bottom: 0.4rem; display: block; }
+
+    /* Literature Review specific styles */
+    .lit-review-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2.5rem 0; }
+    @media (max-width: 900px) { .lit-review-grid { grid-template-columns: 1fr; } }
+    .lit-pillar { background: var(--color-surface); border: 1px solid var(--color-border); border-radius: 14px; padding: 1.75rem; }
+    .lit-pillar-icon { font-size: 1.6rem; margin-bottom: 0.6rem; }
+    .lit-pillar h3 { font-size: 1.05rem; font-weight: 800; margin: 0 0 1rem; letter-spacing: -0.01em; }
+    .lit-pillar p { font-size: 0.9rem; line-height: 1.72; color: var(--color-text-muted); margin-bottom: 0.8rem; }
+    .lit-pillar p:last-child { margin: 0; }
+    .lit-pillar .scholar-tag { display: inline-block; margin: 0 4px 4px 0; font-size: 0.72rem; font-weight: 700; padding: 0.15rem 0.6rem; border-radius: 99px; background: var(--color-primary-highlight, #fde8db); color: var(--color-primary); }
+
+    /* Smooth section transitions */
+    .section + .section, .section-alt + .section, .section + .section-alt { border-top: 1px solid var(--color-border); }
+
+    /* Better essay prose spacing */
+    .essay-prose > p:first-child::first-letter {
+      font-family: 'Instrument Serif', serif;
+      font-size: 3.2rem;
+      font-weight: 400;
+      float: left;
+      line-height: 0.8;
+      margin: 0.1rem 0.12rem 0 0;
+      color: var(--color-primary);
+    }
+  </style>
 </head>
 <body>
 
@@ -36,14 +147,18 @@
       </a>
 
       <ul class="nav-links" role="list">
-        <li><a href="#overview">Overview</a></li>
-        <li><a href="#theory">Theory</a></li>
-        <li><a href="#historical-context">History</a></li>
-        <li><a href="#data">Data</a></li>
-        <li><a href="#posts">Posts</a></li>
-        <li><a href="#gallery">Gallery</a></li>
+        <li><a href="#introduction">Intro</a></li>
+        <li><a href="#literature-review">Lit Review</a></li>
         <li><a href="#timeline">Timeline</a></li>
+        <li><a href="#research-questions">RQs</a></li>
+        <li><a href="#methodology">Method</a></li>
+        <li><a href="#data">Findings</a></li>
+        <li><a href="#posts">Posts</a></li>
+        <li><a href="#discussion">Discussion</a></li>
+        <li><a href="#conclusion">Conclusion</a></li>
+        <li><a href="#tools">Tools</a></li>
         <li><a href="#about">About</a></li>
+        <li><a href="#timeline">Timeline</a></li>
         <li><a href="#bibliography">Bibliography</a></li>
       </ul>
 
@@ -60,13 +175,16 @@
     <!-- Mobile nav -->
     <div class="mobile-nav" id="mobileNav" hidden>
       <ul role="list">
-        <li><a href="#overview" onclick="closeMobileNav()">Overview</a></li>
-        <li><a href="#theory" onclick="closeMobileNav()">Theory</a></li>
-        <li><a href="#historical-context" onclick="closeMobileNav()">History</a></li>
-        <li><a href="#data" onclick="closeMobileNav()">Data</a></li>
-        <li><a href="#posts" onclick="closeMobileNav()">Posts</a></li>
-        <li><a href="#gallery" onclick="closeMobileNav()">Gallery</a></li>
+        <li><a href="#introduction" onclick="closeMobileNav()">Introduction</a></li>
+        <li><a href="#literature-review" onclick="closeMobileNav()">Literature Review</a></li>
         <li><a href="#timeline" onclick="closeMobileNav()">Timeline</a></li>
+        <li><a href="#research-questions" onclick="closeMobileNav()">Research Questions</a></li>
+        <li><a href="#methodology" onclick="closeMobileNav()">Methodology</a></li>
+        <li><a href="#data" onclick="closeMobileNav()">Findings</a></li>
+        <li><a href="#posts" onclick="closeMobileNav()">Post Explorer</a></li>
+        <li><a href="#discussion" onclick="closeMobileNav()">Discussion</a></li>
+        <li><a href="#conclusion" onclick="closeMobileNav()">Conclusion</a></li>
+        <li><a href="#tools" onclick="closeMobileNav()">Tools & Methods</a></li>
         <li><a href="#about" onclick="closeMobileNav()">About</a></li>
         <li><a href="#bibliography" onclick="closeMobileNav()">Bibliography</a></li>
       </ul>
@@ -91,12 +209,11 @@
         </h1>
         <p class="hero-subtitle fade-in">
           How do platform architectures, API restrictions, and algorithmic logics
-          shape what disaster relief organizations can say, and what researchers
-          can see, during a crisis?
+          shape what disaster relief organizations can say — and what scholars can see — during a crisis in the post-API social media age?
         </p>
         <div class="hero-meta fade-in">
           <div class="hero-stat">
-            <span class="stat-num" data-target="240">0</span>
+            <span class="stat-num" data-target="168">0</span>
             <span class="stat-label">Curated Posts</span>
           </div>
           <div class="hero-stat-divider" aria-hidden="true"></div>
@@ -116,8 +233,8 @@
           </div>
         </div>
         <div class="hero-ctas fade-in">
-          <a href="#overview" class="btn btn-primary">Explore the Project</a>
-          <a href="#data" class="btn btn-ghost">View Findings</a>
+          <a href="#introduction" class="btn btn-primary">Read the Essay</a>
+          <a href="#posts" class="btn btn-ghost">Explore Posts</a>
         </div>
       </div>
       <div class="hero-visual fade-in" aria-hidden="true">
@@ -152,17 +269,18 @@
     </section>
 
     <!-- ═══════════════════════════════════════════════ OVERVIEW ══ -->
-    <section class="section" id="overview">
+    <section class="section" id="introduction">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-eyebrow">01 — Project Overview</span>
-          <h2 class="section-title">What This Project Is About</h2>
+          <span class="section-eyebrow">01 — Introduction</span>
+          <h2 class="section-title">Setting the Stage: Platform, Crisis, and the Social Media Age</h2>
         </div>
         <div class="overview-grid">
           <div class="overview-text fade-in">
-            <p>This project offers a historically situated and methodologically self-aware examination of how the formal features of social media platforms shape the crisis communication practices of disaster relief organizations. Focusing on <strong>FEMA</strong> and the <strong>American Red Cross (ARC)</strong>, I analyze posts on <strong>X (formerly Twitter)</strong> and <strong>Instagram</strong> across major California wildfire events between 2020 and 2025.</p>
-            <p>Two interrelated forces defined this period. The <strong>COVID-19 pandemic</strong> transformed how the public inhabits, uses, and understands social media. And major <strong>platform shifts</strong> (including Twitter's restructuring into X, significant restrictions on API access, and Instagram's algorithmic reorientation) dramatically altered the conditions under which institutional crisis communication occurs and under which researchers can study it.</p>
-            <p>This project substantially expands on my prior textual analysis of 79 X posts, building a curated corpus of approximately <strong>240 posts</strong> drawn from both X and Instagram, distributed across four distinct wildfire seasons.</p>
+            <p>On January 7, 2025, hurricane-force winds ignited multiple wildfires simultaneously across Los Angeles — the most destructive urban fire event in California history. Within hours, FEMA and the American Red Cross were posting across X and Instagram. One organization posted evacuation directives and grant announcements. The other posted a mother holding a photograph of her immigrant parents that she refused to leave behind. Their posts looked different, sounded different, and mobilized entirely different emotional and institutional registers. <em>Why?</em></p>
+            <p>This project investigates how <strong>platform infrastructure</strong>, <strong>organizational identity</strong>, and <strong>historical temporality</strong> shaped the social media crisis communication of <strong>FEMA</strong> and the <strong>American Red Cross (ARC)</strong> during major California wildfire events from 2020 to 2025. Drawing on a manually curated corpus of <strong>168 posts</strong> across X (formerly Twitter) and Instagram, this study offers a historically situated, methodologically self-aware rhetorical analysis of institutional disaster communication in the post-API social media era.</p>
+            <p>The 2020–2025 period is not a generic "social media era" — it is a historically specific moment defined by three overlapping crises of media infrastructure. The <strong>COVID-19 pandemic</strong> restructured how the public inhabits and trusts social media, embedding a new layer of crisis temporality into every disaster event of the period. Twitter's restructuring into X and the APIcalypse — the deliberate restriction of research data access (Bruns, 2019) — fundamentally altered what researchers could know. Instagram's algorithmic reorientation toward visual storytelling and emotional resonance created an environment that rewarded ARC and challenged FEMA in structurally predictable ways. This project treats these transformations not as contextual background but as constitutive elements of the rhetorical situation itself.</p>
+            <p>This project is also a digital artifact in its own right. Following McPherson (2018), every design decision — the interactive post explorer, the animated charts, the dark mode — embeds a claim about what scholarship can look like in the digital humanities era. The interface does not contain the argument; it <em>is</em> part of the argument.</p>
           </div>
           <div class="overview-cards fade-in">
             <div class="feature-card card-fire">
@@ -170,77 +288,82 @@
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M8.5 14.5A2.5 2.5 0 0011 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 11-14 0c0-1.153.433-2.294 1-3a2.5 2.5 0 002.5 2.5z"/></svg>
               </div>
               <h3>Historical Specificity</h3>
-              <p>The 2020–2025 period is not a generic "social media era." COVID temporality, the Twitter-to-X transition, and API closure produced a historically distinct media environment.</p>
+              <p>COVID temporality, the Twitter-to-X transition, and API closure produced a historically distinct media environment that shapes every post in this corpus.</p>
             </div>
             <div class="feature-card card-api">
               <div class="feature-card-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/><line x1="2" y1="2" x2="22" y2="22"/></svg>
               </div>
               <h3>Post-API Methodology</h3>
-              <p>The APIcalypse is not a technical inconvenience — it is a form of platform power. This project treats manual curation as a principled and theoretically rigorous methodological response.</p>
+              <p>The APIcalypse is a form of platform power (Bruns, 2019). This project treats manual curation as a principled, theoretically grounded methodological response — not a workaround.</p>
             </div>
             <div class="feature-card card-rhetoric">
               <div class="feature-card-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
               </div>
               <h3>Rhetorical Analysis</h3>
-              <p>Close reading of how FEMA and ARC construct authority, empathy, and urgency — and how platform form enables or forecloses certain rhetorical possibilities.</p>
+              <p>Close reading of how FEMA and ARC construct authority, empathy, and urgency — analyzing logos, pathos, and ethos across platform environments.</p>
             </div>
             <div class="feature-card card-platform">
               <div class="feature-card-icon">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="24" height="24"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/></svg>
               </div>
-              <h3>Cross-Platform Comparison</h3>
-              <p>Comparing X and Instagram reveals how platform affordances, including algorithmic feeds, hashtag visibility, and image-first design, produce distinct rhetorical environments for the same organizations.</p>
+              <h3>Organizational Identity</h3>
+              <p>How does the difference between a federal agency and a humanitarian nonprofit produce systematically distinct crisis communication registers — even on the same platform?</p>
             </div>
           </div>
         </div>
 
         <!-- Corpus breakdown -->
         <div class="corpus-grid fade-in">
-          <h3 class="corpus-title">Corpus Breakdown: 240 Posts</h3>
-          <div class="corpus-table">
-            <div class="corpus-row corpus-row-header">
-              <div></div>
-              <div>
-                <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25z"/></svg>
-                X (Twitter)
-              </div>
-              <div>
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="16" height="16"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
-                Instagram
-              </div>
-              <div>Total</div>
-            </div>
-            <div class="corpus-row corpus-row-fema">
-              <div class="corpus-org">
-                <span class="org-dot dot-fema"></span>
-                FEMA
-              </div>
-              <div>60 posts</div>
-              <div>60 posts</div>
-              <div class="corpus-total">120</div>
-            </div>
-            <div class="corpus-row corpus-row-arc">
-              <div class="corpus-org">
-                <span class="org-dot dot-arc"></span>
-                American Red Cross
-              </div>
-              <div>60 posts</div>
-              <div>60 posts</div>
-              <div class="corpus-total">120</div>
-            </div>
-            <div class="corpus-row corpus-row-footer">
-              <div>Total</div>
-              <div>120</div>
-              <div>120</div>
-              <div class="corpus-total">240</div>
-            </div>
+          <h3 class="corpus-title">Corpus Breakdown: 168 Posts</h3>
+          <div class="data-table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Organization</th>
+                  <th>Platform</th>
+                  <th>Posts</th>
+                  <th>Period</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><span class="org-dot dot-fema" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--color-primary);margin-right:6px;vertical-align:middle"></span>FEMA</td>
+                  <td>X (Twitter)</td>
+                  <td>33</td>
+                  <td>2020–2025</td>
+                </tr>
+                <tr>
+                  <td><span class="org-dot dot-fema" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--color-primary);margin-right:6px;vertical-align:middle"></span>FEMA</td>
+                  <td>Instagram</td>
+                  <td>63</td>
+                  <td>2020–2025</td>
+                </tr>
+                <tr>
+                  <td><span class="org-dot dot-arc" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--color-accent,#d94f0a);margin-right:6px;vertical-align:middle"></span>American Red Cross</td>
+                  <td>X (Twitter)</td>
+                  <td>46</td>
+                  <td>2020–2025</td>
+                </tr>
+                <tr>
+                  <td><span class="org-dot dot-arc" style="display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--color-accent,#d94f0a);margin-right:6px;vertical-align:middle"></span>American Red Cross</td>
+                  <td>Instagram</td>
+                  <td>24</td>
+                  <td>2020–2025</td>
+                </tr>
+                <tr>
+                  <td colspan="2"><strong>Total</strong></td>
+                  <td><strong>168</strong></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
           </div>
           <div class="wildfire-seasons">
-            <span class="season-badge">2020 Creek & North Complex</span>
+            <span class="season-badge">2020 Creek &amp; North Complex</span>
             <span class="season-badge">2021 Dixie Fire</span>
-            <span class="season-badge">2023 California & Maui</span>
+            <span class="season-badge">2022–2023 CA Wildfires</span>
             <span class="season-badge">2025 Los Angeles</span>
           </div>
         </div>
@@ -248,12 +371,12 @@
     </section>
 
     <!-- ══════════════════════════════════════════════ THEORY ══ -->
-    <section class="section section-alt" id="theory">
+    <section class="section section-alt" id="literature-review">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-eyebrow">02 — Theoretical Framework</span>
-          <h2 class="section-title">Major Thinkers &amp; Conversations</h2>
-          <p class="section-desc">Click any thinker below to explore how their work informs this project.</p>
+          <span class="section-eyebrow">02 — Literature Review</span>
+          <h2 class="section-title">Theoretical Frameworks &amp; Scholarly Conversations</h2>
+          <p class="section-desc">This project draws on three interconnected bodies of scholarship. Click any thinker to explore how their work shapes this analysis.</p>
         </div>
 
         <div class="thinkers-grid fade-in" id="thinkersGrid">
@@ -266,6 +389,57 @@
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
           </button>
           <div class="thinker-panel-inner" id="thinkerPanelInner"></div>
+        </div>
+
+
+        <!-- Literature Review: Three Pillars -->
+        <div class="lit-review-grid fade-in" style="margin-top:3rem;">
+          <div class="lit-pillar">
+            <div class="lit-pillar-icon">🏗️</div>
+            <h3>Platform Infrastructure Studies</h3>
+            <p>The concept of infrastructure, as developed in science and technology studies and extended to digital media, directs attention to the systems that organize communication without being visible to those who use them. <strong>Starosielski (2015)</strong> demonstrates that digital infrastructure carries colonial histories — submarine cable networks follow 19th-century telegraph routes. This historicizing move is essential: the social media platforms used by FEMA and ARC are not neutral channels but layered infrastructures with political genealogies.</p>
+            <p><strong>Bucher (2018)</strong> extends this analysis to platform algorithms, showing how algorithmic logics are not mere delivery mechanisms but active editorial forces that determine what crisis messages circulate, for whom, and under what conditions. <strong>Kennedy (2016)</strong> adds a data studies dimension, examining how the normalization of social data mining creates conditions that crisis communicators must navigate.</p>
+            <span class="scholar-tag">Starosielski (2015)</span>
+            <span class="scholar-tag">Bucher (2018)</span>
+            <span class="scholar-tag">Kennedy (2016)</span>
+            <span class="scholar-tag">Hu (2015)</span>
+          </div>
+          <div class="lit-pillar">
+            <div class="lit-pillar-icon">🔌</div>
+            <h3>Post-API Digital Methods</h3>
+            <p>The "APIcalypse" (Bruns, 2019) — the deliberate restriction of programmatic social media data access by major platforms — has fundamentally restructured the conditions of digital scholarship. <strong>Bruns (2019)</strong> argues this is not a technical accident but a deliberate exercise of platform power aimed at limiting independent scholarly accountability. <strong>Freelon (2018)</strong> and <strong>Perriam et al. (2020)</strong> extend this to methodological practice, calling for qualitative and interpretive approaches that theorize the conditions of research rather than simply mourning lost computational access.</p>
+            <p>This literature directly motivates this project's methodological stance: treating manual curation not as a workaround but as a principled scholarly response, and treating corpus size as a finding about platform governance rather than a limitation to be apologized for.</p>
+            <span class="scholar-tag">Bruns (2019)</span>
+            <span class="scholar-tag">Freelon (2018)</span>
+            <span class="scholar-tag">Perriam et al. (2020)</span>
+            <span class="scholar-tag">Walsh (2023)</span>
+            <span class="scholar-tag">Lomborg &amp; Bechmann (2014)</span>
+          </div>
+          <div class="lit-pillar">
+            <div class="lit-pillar-icon">🆘</div>
+            <h3>Crisis Communication Theory</h3>
+            <p><strong>Kent and Taylor's (2002)</strong> dialogic theory of public relations identifies mutuality, propinquity, empathy, risk, and commitment as the five principles of genuinely relational institutional communication — a framework that exposes the systematic difference between FEMA's broadcast-oriented communication and ARC's more community-embedded relational practices. <strong>Coombs's (2022)</strong> Situational Crisis Communication Theory (SCCT) provides a framework for understanding how organizational type and crisis attribution shape message selection.</p>
+            <p><strong>Jin, Liu, and Austin's (2014)</strong> Social-Mediated Crisis Communication (SMCC) model is essential for understanding how platform environment mediates the relationship between institutional communicators and crisis-affected publics. Their empirical work demonstrates that platform form — not just content — shapes public trust and response during disasters.</p>
+            <span class="scholar-tag">Kent &amp; Taylor (2002)</span>
+            <span class="scholar-tag">Coombs (2022)</span>
+            <span class="scholar-tag">Jin, Liu &amp; Austin (2014)</span>
+            <span class="scholar-tag">Austin et al. (2017)</span>
+            <span class="scholar-tag">Zappavigna (2012)</span>
+          </div>
+          <div class="lit-pillar">
+            <div class="lit-pillar-icon">🖥️</div>
+            <h3>Digital Humanities &amp; Representation</h3>
+            <p><strong>Drucker (2011, 2020)</strong> argues that humanities scholars must resist the positivist assumptions embedded in conventional data visualizations. Her concept of <em>capta</em> — data as always-already interpreted rather than neutrally given — grounds this project's visualization design: every chart is an argument, not a transparent window onto fixed facts. <strong>McPherson (2018)</strong> insists that technical design is never politically neutral: the UNIX operating system's modular architecture carried the same logic of social segregation as postwar America, and every digital interface embeds values about knowledge and difference.</p>
+            <p>Together, these scholars establish that the design of this website is itself an act of scholarly argumentation — not a container for findings but an enactment of claims about what knowledge looks like.</p>
+            <span class="scholar-tag">Drucker (2011, 2020)</span>
+            <span class="scholar-tag">McPherson (2018)</span>
+          </div>
+        </div>
+
+        <!-- Synthesis paragraph -->
+        <div class="essay-prose fade-in" style="margin-top:2.5rem;padding:2rem;background:var(--color-surface);border-radius:14px;border:1px solid var(--color-border);">
+          <h3 style="font-family:'Instrument Serif',serif;font-size:1.3rem;margin:0 0 1rem;">Theoretical Synthesis</h3>
+          <p style="margin:0;line-height:1.8;font-size:0.97rem;">These four bodies of scholarship converge on a single theoretical claim: that social media communication cannot be understood apart from the infrastructural, political, and historical conditions that produce it. Crisis communication does not simply happen to occur on platforms; it is constitutively shaped by platform affordances, algorithmic logics, organizational identities, and the historical specificity of the moment. This project's analytical framework sits at the intersection of platform infrastructure studies, post-API digital methods, crisis communication theory, and digital humanities — bringing them into conversation to ask questions that none of them could address alone.</p>
         </div>
 
         <!-- Framework overview -->
@@ -312,11 +486,12 @@
       </div>
     </section>
 
+
     <!-- ══════════════════════════════════ HISTORICAL CONTEXT ══ -->
     <section class="section" id="historical-context">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-eyebrow">03 — Historical Context</span>
+          <span class="section-eyebrow">02b — Historical Context</span>
           <h2 class="section-title">Communications Infrastructures Accrete</h2>
           <p class="section-desc">Situating the 2020–2025 dataset within two longer temporal arcs: the layered history of disaster communication media, and the compressed arc of social media's open-to-closed transformation. Following Starosielski (2015): infrastructures do not replace one another — they accrete. <strong>Click any era to explore its significance for this project.</strong></p>
         </div>
@@ -349,13 +524,147 @@
       </div>
     </section>
 
+
+
+    <!-- ════════════════════════════════════════════ TIMELINE ══ -->
+    <section class="section section-alt" id="timeline">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">02c — Platform &amp; Wildfire Timeline</span>
+          <h2 class="section-title">Five Years of Crisis &amp; Platform Change</h2>
+          <p class="section-desc">The 2020–2025 period was not a stable media environment. Click any event to learn more about its significance for this project.</p>
+        </div>
+
+        <div class="timeline-container fade-in" id="timelineContainer">
+          <!-- Injected by JS -->
+        </div>
+      </div>
+    </section>
+
+
+
+    <!-- ══════════════════════════════════ RESEARCH QUESTIONS ══ -->
+    <section class="section" id="research-questions">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">03 — Research Questions</span>
+          <h2 class="section-title">What This Study Asks</h2>
+          <p class="section-desc">Three interrelated questions guide this analysis, each targeting a different dimension of the relationship between platform, organization, and crisis communication.</p>
+        </div>
+        <div class="rq-cards fade-in">
+          <div class="rq-card">
+            <div class="rq-num">RQ 1 — Platform Affordances</div>
+            <p>How do the distinct affordances of X and Instagram — including algorithmic feeds, hashtag ecology, media format constraints, and audience expectations — shape the crisis communication strategies of FEMA and the American Red Cross during California wildfires between 2020 and 2025?</p>
+          </div>
+          <div class="rq-card">
+            <div class="rq-num">RQ 2 — Organizational Identity</div>
+            <p>In what ways does organizational type — specifically the distinction between a federal government agency (FEMA) and a quasi-governmental humanitarian organization (ARC) — shape the rhetorical frames, appeals, and registers deployed in wildfire-related social media posts?</p>
+          </div>
+          <div class="rq-card">
+            <div class="rq-num">RQ 3 — Historical Temporality</div>
+            <p>How did the historically specific conditions of the 2020–2025 period — including COVID-19 pandemic temporality, the Twitter-to-X platform transition, and the progressive closure of API-based research access — shape institutional crisis communication practices and the methodological possibilities available to study them?</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════ METHODOLOGY ══ -->
+    <section class="section section-alt" id="methodology">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">04 — Methodology</span>
+          <h2 class="section-title">How This Study Was Conducted</h2>
+        </div>
+
+        <div class="essay-prose fade-in">
+          <h3>Research Design: Qualitative Rhetorical Analysis</h3>
+          <p>This study employs qualitative rhetorical analysis as its primary method, drawing on Aristotle's tripartite framework of rhetorical appeals — <em>logos</em> (reason/evidence), <em>pathos</em> (emotion/affect), and <em>ethos</em> (credibility/authority) — to systematically analyze how FEMA and the American Red Cross construct their crisis communication on social media. This framework is supplemented by Kent and Taylor's (2002) dialogic theory of public relations and Coombs's (2022) Situational Crisis Communication Theory.</p>
+
+          <h3>Corpus Construction</h3>
+          <p>The corpus of 168 posts was built through systematic manual curation of the verified public accounts of both organizations on X and Instagram. Posts were identified through platform-native search, date-range filtering, and hashtag tracking, using wildfire-relevant search terms (e.g., #CaliforniaWildfires, #LAFires, #DixieFire). All posts were archived with full metadata including date, engagement metrics where visible, media type, and direct URL.</p>
+        </div>
+
+        <!-- Data size table -->
+        <div class="data-table-wrap fade-in">
+          <table class="data-table">
+            <thead>
+              <tr><th>Organization</th><th>Platform</th><th>Posts</th><th>Period</th></tr>
+            </thead>
+            <tbody>
+              <tr><td><span class="org-dot dot-fema" style="display:inline-block;margin-right:6px"></span>FEMA</td><td>X (Twitter)</td><td>33</td><td>2020–2025</td></tr>
+              <tr><td><span class="org-dot dot-fema" style="display:inline-block;margin-right:6px"></span>FEMA</td><td>Instagram</td><td>65</td><td>2020–2025</td></tr>
+              <tr><td><span class="org-dot dot-arc" style="display:inline-block;margin-right:6px"></span>American Red Cross</td><td>X (Twitter)</td><td>46</td><td>2020–2025</td></tr>
+              <tr><td><span class="org-dot dot-arc" style="display:inline-block;margin-right:6px"></span>American Red Cross</td><td>Instagram</td><td>24</td><td>2020–2025</td></tr>
+              <tr><td colspan="2"><strong>Total</strong></td><td><strong>168</strong></td><td></td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Qualitative defense callout -->
+        <div class="qual-callout fade-in">
+          <h3 class="qual-callout-title">On Corpus Size: A Note for Quantitatively-Oriented Readers</h3>
+          <p>The 168 posts in this corpus are not a sample — they constitute the <strong>complete, retrievable population</strong> of wildfire-related posts made by these two organizations on these two platforms across this five-year period. The corpus size is therefore not a methodological choice but a structural constraint: a direct consequence of platform power. Twitter's 2023 API closure made large-scale automated retrieval impossible; Instagram's interface further limits systematic collection. The corpus size is itself a <em>finding</em> about platform governance.</p>
+          <p>More fundamentally, this study does not seek the kind of statistical generalizability that larger samples support. Qualitative rhetorical analysis operates under a different epistemological logic: it seeks <strong>theoretical depth and interpretive richness</strong>, not statistical representativeness. The question this study asks — <em>how</em> do these organizations frame their crisis communication, and <em>why</em> does it differ across platforms and organizational types? — is inherently a question of meaning, not frequency.</p>
+          <p class="scholar-quote">"The logic of qualitative research is not sampling logic but rather theoretical logic... The goal is theoretical elaboration, not statistical generalization." — Tracy, S. J. (2010). Qualitative quality: Eight 'big-tent' criteria for excellent qualitative research. <em>Qualitative Inquiry, 16</em>(10), 837–851.</p>
+          <p>As Lincoln and Guba (1985) establish in their foundational work on naturalistic inquiry, the appropriate criteria for evaluating qualitative work are credibility, transferability, dependability, and confirmability — not sample size or statistical power. A carefully analyzed corpus of 168 posts, read with theoretical rigor and methodological transparency, can generate more significant scholarly insight than a poorly theorized dataset of thousands.</p>
+        </div>
+
+        <div class="essay-prose fade-in">
+          <h3>Scope and Delimitations</h3>
+          <p>This study focuses exclusively on the <strong>original post content</strong> — the messages, captions, images, and multimedia published directly by the verified official accounts of FEMA (<strong>@fema</strong>) and the American Red Cross (<strong>@americanredcross</strong>) on X (formerly Twitter) and Instagram. The analysis does not include audience comments, replies, or reactions (likes, shares, retweets/reposts); these forms of audience engagement fall outside the scope of this project.</p>
+          <p>This delimitation is both methodologically principled and analytically motivated. The research questions of this study concern how these organizations <em>frame and construct</em> their crisis communication — that is, the rhetorical choices made by institutional communicators when they speak to publics during disasters. Audience comments and engagement metrics reflect public response and reception, which are substantively different analytical objects requiring different methods (e.g., audience reception studies, content engagement analysis). Incorporating them would shift the study from an organizational communication analysis to an audience effects study, which is beyond the scope of this project.</p>
+          <p>Posts from affiliated regional accounts (e.g., @RedCrossLA, @SoCal_RedCross) are included only when reshared or directly referenced by the national accounts analyzed. Posts from third-party accounts reshared by FEMA or ARC through Instagram's broadcast channel feature are included as part of FEMA's and ARC's curated communication strategy — their act of redistribution constitutes a communicative choice within scope.</p>
+
+          <h3>Analytical Procedure</h3>
+        </div>
+
+        <div class="method-steps fade-in">
+          <div class="method-step">
+            <div class="method-step-num">1</div>
+            <div class="method-step-body">
+              <h4>Corpus Collection &amp; Archiving</h4>
+              <p>Manual collection of all publicly available wildfire-related posts from @fema and @americanredcross on X and Instagram (2020–2025). Each post archived with date, URL, media type, engagement data, and full caption text.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">2</div>
+            <div class="method-step-body">
+              <h4>Rhetorical Coding</h4>
+              <p>Each post coded for primary rhetorical appeal (logos, pathos, ethos) based on dominant persuasive strategy. Coding applied iteratively, with close attention to textual markers, visual choices, hashtag use, and platform-specific formatting decisions.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">3</div>
+            <div class="method-step-body">
+              <h4>Platform Comparative Analysis</h4>
+              <p>Systematic comparison of communication strategies across X and Instagram for each organization. Focus on how platform affordances — image primacy, caption length norms, algorithmic incentives — shape rhetorical choices.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">4</div>
+            <div class="method-step-body">
+              <h4>Organizational Comparative Analysis</h4>
+              <p>Cross-organizational comparison to identify systematic differences attributable to organizational type (federal agency vs. humanitarian nonprofit) rather than platform environment.</p>
+            </div>
+          </div>
+          <div class="method-step">
+            <div class="method-step-num">5</div>
+            <div class="method-step-body">
+              <h4>Temporal &amp; Contextual Analysis</h4>
+              <p>Interpretation of findings within the historically specific context of 2020–2025: COVID temporality, platform transitions, API closure, and the escalating severity of California wildfire events.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- ════════════════════════════════════════════════ DATA ══ -->
     <section class="section section-alt" id="data">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-eyebrow">04 — Findings &amp; Analysis</span>
+          <span class="section-eyebrow">05 — Findings &amp; Analysis</span>
           <h2 class="section-title">What the Data Reveals</h2>
-          <p class="section-desc">Rhetorical analysis of 240 curated posts across FEMA and the American Red Cross, compared by organization, platform, and wildfire season.</p>
+          <p class="section-desc">Rhetorical analysis of all 168 posts across FEMA and ARC, compared by organization, platform, and wildfire season. across FEMA and the American Red Cross, compared by organization, platform, and wildfire season.</p>
         </div>
 
         <!-- Chart row 1 -->
@@ -433,9 +742,22 @@
     <section class="section section-alt" id="posts">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-eyebrow">05 — Post Explorer</span>
+          <span class="section-eyebrow">06 — Post Explorer</span>
           <h2 class="section-title">Browse the Dataset</h2>
-          <p class="section-desc">All 79 X posts from the original analysis dataset. Click any post to view the full content, rhetorical coding, and direct link to the original.</p>
+          <p class="section-desc">The complete 168-post corpus — X (Twitter) and Instagram. <strong>Note:</strong> Analysis covers original posts only from official accounts; comments, likes, and audience reactions are outside scope. Use the platform tabs to switch between platforms, filter by organization or rhetorical appeal, and click any post for full content, analysis, and a direct link to the original.</p>
+        </div>
+
+        <!-- Platform tabs -->
+        <div class="platform-tabs fade-in" id="platformTabs">
+          <button class="platform-tab active" data-platform="all">All Platforms</button>
+          <button class="platform-tab" data-platform="x">
+            <svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.746l7.73-8.835L1.254 2.25H8.08l4.253 5.622L18.244 2.25z"/></svg>
+            X · 79 posts
+          </button>
+          <button class="platform-tab" data-platform="instagram">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="13" height="13"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+            Instagram · 89 posts
+          </button>
         </div>
 
         <!-- Filter bar -->
@@ -449,7 +771,7 @@
           <input type="search" class="posts-search" id="postSearch" placeholder="Search posts…" aria-label="Search posts" />
         </div>
 
-        <div class="posts-count fade-in" id="postsCount">Showing all 79 posts</div>
+        <div class="posts-count fade-in" id="postsCount">Showing all 168 posts</div>
 
         <!-- Posts grid -->
         <div class="posts-grid" id="postsGrid" role="list">
@@ -462,7 +784,7 @@
     <section class="section wildfire-gallery-section" id="gallery">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-eyebrow">06 — Visual Context</span>
+          <span class="section-eyebrow">07 — Visual Context</span>
           <h2 class="section-title">The Crisis Behind the Data</h2>
           <p class="section-desc">California's 2020–2025 wildfire seasons produced some of the most devastating disasters in state history, reshaping how communities and institutions communicate during emergencies.</p>
         </div>
@@ -512,17 +834,121 @@
       </div>
     </section>
 
-    <!-- ════════════════════════════════════════════ TIMELINE ══ -->
-    <section class="section section-alt" id="timeline">
+    <!-- ════════════════════════════════════════════ DISCUSSION ══ -->
+    <section class="section" id="discussion">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-eyebrow">07 — Platform & Wildfire Timeline</span>
-          <h2 class="section-title">Five Years of Crisis &amp; Platform Change</h2>
-          <p class="section-desc">The 2020–2025 period was not a stable media environment. Click any event to learn more about its significance for this project.</p>
+          <span class="section-eyebrow">08 — Discussion</span>
+          <h2 class="section-title">Interpreting the Findings</h2>
         </div>
+        <div class="essay-prose fade-in">
+          <h3>Platform Infrastructure as Active Rhetorical Force</h3>
+          <p>The three research questions posed at the outset of this study — on platform affordances, organizational identity, and historical temporality — find consistent and mutually reinforcing answers in the corpus. The most foundational finding is that platform architecture shapes rhetorical choice in systematic, observable ways. Instagram's image-primacy interface consistently elicits more emotionally resonant communication from both organizations. ARC's Instagram posts are markedly longer, more narrative, and more pathos-dominant than their X counterparts — not because the organization communicates differently, but because the platform's affordances reward certain registers and penalize others. FEMA's Instagram presence, similarly, defaults to designed infographics that translate procedural information into shareable graphics — a format that Instagram's visual economy demands but that X's text-forward culture makes unnecessary.</p>
 
-        <div class="timeline-container fade-in" id="timelineContainer">
-          <!-- Injected by JS -->
+          <div class="finding-callout">
+            <h4>Key Insight: Platform Affordances Are Not Neutral</h4>
+            <p>Instagram's algorithmic reward structure — prioritizing engagement, visual impact, and emotional resonance — is not a neutral distribution mechanism. It is an active editorial force (Bucher, 2018) that systematically advantages certain rhetorical registers over others. FEMA and ARC do not simply "use Instagram" — they are shaped by it.</p>
+          </div>
+
+          <h3>Organizational Identity as Rhetorical Resource</h3>
+          <p>The contrast between FEMA and ARC across the full 168-post corpus is stark and consistent. FEMA operates primarily in a logos register: procedural, institutional, deferential to local authority, administratively precise. ARC operates primarily in a pathos register: narrative, community-embedded, emotionally direct, dialogic. This contrast holds across both platforms and across all five wildfire seasons analyzed, suggesting that organizational type — specifically, the structural difference between a federal bureaucracy and a humanitarian nonprofit — is a more durable determinant of rhetorical identity than platform environment.</p>
+
+          <div class="finding-callout">
+            <h4>Key Insight: Organizational Type Outlasts Platform Logic</h4>
+            <p>Despite adapting their formats to Instagram's visual norms, both organizations remain recognizable across platforms. FEMA remains procedural even on Instagram; ARC remains narrative even on X. Organizational rhetorical identity is more durable than platform logic.</p>
+          </div>
+
+          <h3>The Post-API Condition as Analytical Object</h3>
+          <p>This project's methodological approach — manual curation in a post-API environment — is not merely a practical accommodation. It is itself a scholarly argument. The APIcalypse (Bruns, 2019) did not just make research harder; it restructured the conditions of institutional accountability. When organizational communication on major platforms becomes inaccessible to systematic scholarly scrutiny, the power dynamics between platforms, organizations, and publics shift in ways that demand explicit theoretical attention. This project treats the corpus size and construction method as findings, not just constraints.</p>
+
+          <h3>COVID Temporality and the Layered Crisis</h3>
+          <p>The 2020–2021 posts in this corpus reflect a genuinely layered crisis environment. ARC's December 2020 post about virtual volunteers from Japan and Korea is not simply a heartwarming human interest story — it is a document of pandemic-era innovation in disaster response. FEMA's September 2020 acknowledgment that "it's normal to experience stress and anxiety" during wildfires is, in context, a COVID-inflected departure from the agency's typical logos register. The pandemic did not merely add one more crisis to manage; it fundamentally restructured how both organizations could communicate, what audiences expected, and what platforms rewarded.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ CONCLUSION ══ -->
+    <section class="section section-alt" id="conclusion">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">09 — Conclusion</span>
+          <h2 class="section-title">Rhetorical Infrastructure and the Future of Crisis Communication</h2>
+        </div>
+        <div class="essay-prose fade-in">
+          <p>The discussion above identifies three analytical forces — platform affordances, organizational identity, and historical temporality — each operating at a different level of abstraction, yet all converging on the same empirical patterns. This project began with a simple empirical observation — that FEMA and ARC communicate differently during wildfires — and has developed it into a theoretically grounded argument about the relationships between platform infrastructure, organizational identity, and crisis communication in a historically specific moment. The 168 posts analyzed here are not a representative sample of some larger population; they are the complete retrievable record of these organizations' wildfire communication on these platforms, and they tell a coherent and theoretically significant story.</p>
+
+          <div class="conclusion-highlight">
+            <h3>The Central Argument</h3>
+            <p>Crisis communication in the social media age is not simply organizational communication that happens to use social platforms. It is communication that is constitutively shaped by platform infrastructure — by algorithmic logics, format constraints, API access conditions, and the historical specificity of the moment in which it occurs. Understanding what FEMA and ARC said during California wildfires requires understanding the platforms through which they spoke, the organizations they are, and the extraordinary historical period in which they operated.</p>
+          </div>
+
+          <p>Three conclusions emerge from this analysis. First, <strong>platform affordances systematically shape rhetorical choice</strong> — Instagram produces more pathos-dominant communication than X for both organizations, not because organizations choose to be more emotional on Instagram, but because the platform's architecture rewards emotional resonance. Second, <strong>organizational type is a more durable determinant of rhetorical identity than platform environment</strong> — FEMA remains logos-dominant and ARC remains pathos-centered regardless of platform, suggesting that institutional communication cultures resist platform pressure. Third, <strong>the post-API condition is not a methodological inconvenience but a structural feature of the information environment</strong> — one that limits scholarly accountability precisely when it is most needed, during the crises that most demand public scrutiny of institutional communication.</p>
+          <p>The 2025 Los Angeles fires — the most destructive urban fire event in California history — produced the highest-volume communication cluster in this corpus. They also occurred in a fully post-API research environment, on platforms that had undergone significant governance transitions, during a period of maximum climate-driven wildfire risk. The questions this project raises about platform power, organizational rhetoric, and research access are not academic abstractions. They are urgent practical questions about how democratic societies can understand, evaluate, and hold accountable the institutions that speak for and to them during disasters.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ═══════════════════════════════════════ TOOLS & METHODS ══ -->
+    <section class="section" id="tools">
+      <div class="container">
+        <div class="section-header fade-in">
+          <span class="section-eyebrow">11 — Tools, Infrastructure &amp; Web Design</span>
+          <h2 class="section-title">How This Website Was Built</h2>
+          <p class="section-desc">This website is itself a digital humanities artifact. Following McPherson (2018), technical design is never politically neutral — every tool choice embeds assumptions about knowledge, accessibility, and scholarly communication.</p>
+        </div>
+        <div class="tools-grid fade-in">
+          <div class="tool-card">
+            <div class="tool-icon">🤖</div>
+            <h4>Claude (Anthropic)</h4>
+            <p>The primary development environment. Claude — Anthropic's AI assistant — was used to write, refactor, and iterate on the entire HTML, CSS, and JavaScript codebase, translating complex scholarly requirements into interactive web components.</p>
+            <span class="tool-tag">AI-Assisted Development</span>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">⚡</div>
+            <h4>HTML5 / CSS3 / JavaScript</h4>
+            <p>The site is built in vanilla HTML, CSS, and JavaScript — no frontend framework or build system. This choice reflects a commitment to simplicity, accessibility, and long-term maintainability consistent with digital humanities values.</p>
+            <span class="tool-tag">Core Web Technologies</span>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">📊</div>
+            <h4>Chart.js</h4>
+            <p>All data visualizations — bar charts, radar charts, doughnut charts, and timelines — are built with Chart.js. Following Drucker (2011), these visualizations are designed as interpretive arguments, not neutral data displays.</p>
+            <span class="tool-tag">Data Visualization</span>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">🎨</div>
+            <h4>Google Fonts &amp; Fontshare</h4>
+            <p>Typography uses Cabinet Grotesk and Satoshi from Fontshare, paired with Instrument Serif from Google Fonts. The pairing of a geometric sans-serif with a humanist serif embodies the project's dual identity as scholarship and digital artifact.</p>
+            <span class="tool-tag">Typography</span>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">🐙</div>
+            <h4>GitHub Pages</h4>
+            <p>Hosted on GitHub Pages — a free static site hosting service that serves files from a GitHub repository via CDN. The source code is publicly accessible, consistent with open-scholarship principles and MITH610's digital humanities ethos.</p>
+            <span class="tool-tag">Hosting &amp; Deployment</span>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">🚀</div>
+            <h4>Spaceship (Domain Registrar)</h4>
+            <p>The custom domain <strong>digitalproject.andrewdonkor.com</strong> was registered through Spaceship, a modern domain registrar. The domain is pointed to GitHub Pages via DNS CNAME records, giving the project a professional, persistent web address.</p>
+            <span class="tool-tag">Domain &amp; DNS</span>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">✍️</div>
+            <h4>Manual Data Curation</h4>
+            <p>All 168 posts were manually identified, archived, and coded — a principled methodological response to the post-API research environment. Manual curation is not a workaround; it is a scholarly commitment to interpretive depth over computational scale.</p>
+            <span class="tool-tag">Research Method</span>
+          </div>
+          <div class="tool-card">
+            <div class="tool-icon">🎯</div>
+            <h4>Lucide Icons</h4>
+            <p>User interface icons throughout the site use Lucide — a clean, open-source icon library. Consistent visual language across the site's interactive elements supports accessibility and professional aesthetic without imposing a commercial design framework.</p>
+            <span class="tool-tag">UI Components</span>
+          </div>
+        </div>
+        <div class="essay-prose fade-in" style="margin-top:2.5rem;">
+          <h3>Design Philosophy</h3>
+          <p>This website enacts the argument it makes. The decision to build a public-facing interactive digital artifact — rather than a traditional academic essay — is itself a methodological and rhetorical claim: that scholarship about social media should inhabit the same media environment it studies. The dark mode toggle, scroll animations, and interactive post cards are not decorations; they are interface decisions that shape how the argument is experienced, building in natural pauses for reflection and inviting the reader to engage actively with the data rather than passively consuming a static text.</p>
         </div>
       </div>
     </section>
@@ -531,7 +957,7 @@
     <section class="section section-alt" id="about">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-eyebrow">08 — About the Researcher</span>
+          <span class="section-eyebrow">12 — About the Researcher</span>
           <h2 class="section-title">Andrew Donkor</h2>
         </div>
         <div class="about-grid fade-in">
@@ -563,13 +989,15 @@
       </div>
     </section>
 
+
+
     <!-- ══════════════════════════════════════ BIBLIOGRAPHY ══ -->
     <section class="section" id="bibliography">
       <div class="container">
         <div class="section-header fade-in">
-          <span class="section-eyebrow">09 — Annotated Bibliography</span>
+          <span class="section-eyebrow">13 — Annotated Bibliography</span>
           <h2 class="section-title">Sources &amp; Annotations</h2>
-          <p class="section-desc">All 19 sources in APA 7th edition with verified DOIs. Click any entry to expand the annotation.</p>
+          <p class="section-desc">All sources in APA 7th edition with verified DOIs. Click any entry to expand the annotation.</p>
         </div>
         <div class="bib-list fade-in" id="bibList">
           <!-- Injected by JS -->
