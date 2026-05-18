@@ -842,8 +842,13 @@ if (timelineContainer) {
 ═══════════════════════════════════════════════════ */
 const bibData = [
   {
-    citation: 'Austin, L., Fraustino, J. D., Jin, Y., & Liu, B. F. (2017). Crisis communication in a changing media environment. In L. Austin & Y. Jin (Eds.), <em>Social media and crisis communication</em> (pp. 423–448). Routledge. <a href="https://doi.org/10.4324/9781315749068-30" target="_blank" rel="noopener">https://doi.org/10.4324/9781315749068-30</a>',
+    citation: 'Austin, L., Fraustino, J. D., Jin, Y., & Liu, B. F. (2017). Crisis communication in a changing media environment. In L. Austin & Y. Jin (Eds.), <em>Social media and crisis communication</em> (pp. 423–448). Routledge. <a href="https://doi.org/10.4324/9781315749068–30" target="_blank" rel="noopener">https://doi.org/10.4324/9781315749068–30</a>',
     annotation: 'This chapter reviews the theoretical landscape of crisis communication scholarship and identifies key gaps produced by the changing social media environment. It provides a core framework for this project by grounding the analysis of FEMA and ARC posts within a tradition that emphasizes the multivocal, platform-mediated character of crisis information flows.'
+  },
+
+  {
+    citation: 'boyd, d., & Crawford, K. (2012). Critical questions for big data: Provocations for a cultural, technological, and scholarly phenomenon. <em>Information, Communication &amp; Society, 15</em>(5), 662&ndash;679. <a href="https://doi.org/10.1080/1369118X.2012.678878" target="_blank" rel="noopener">https://doi.org/10.1080/1369118X.2012.678878</a>',
+    annotation: 'boyd and Crawford identify six provocations about big data research, arguing that scale, access inequalities, and ethical assumptions carry profound epistemological and political consequences. This article situates the post-API crisis within a longer structural pattern in which access to social data is unequally distributed and ideologically loaded — providing essential context for understanding why this project\'s methodological constraints are themselves analytically significant.'
   },
   {
     citation: 'Bruns, A. (2019). After the "APIcalypse": Social media platforms and their fight against critical scholarly research. <em>Information, Communication & Society</em>, <em>22</em>(11), 1544–1566. <a href="https://doi.org/10.1080/1369118X.2019.1637447" target="_blank" rel="noopener">https://doi.org/10.1080/1369118X.2019.1637447</a>',
@@ -881,8 +886,13 @@ const bibData = [
     citation: 'Kennedy, H. (2016). <em>Post, mine, repeat: Social media data mining becomes ordinary</em>. Palgrave Macmillan.',
     annotation: 'Kennedy examines how social media data practices have become normalized across public, commercial, and academic contexts, arguing that the everyday extraction and analysis of social data carries significant ethical and epistemological consequences. This book broadens the project\'s understanding of platform data beyond the question of technical collection, situating the research within larger data cultures that shaped the 2020–2025 period.'
   },
+
   {
-    citation: 'Kent, M. L., & Taylor, M. (2002). Toward a dialogic theory of public relations. <em>Public Relations Review</em>, <em>28</em>(1), 21–37. <a href="https://doi.org/10.1016/S0363-8111(02)00108-X" target="_blank" rel="noopener">https://doi.org/10.1016/S0363-8111(02)00108-X</a>',
+    citation: 'Liu, B. F., Fraustino, J. D., & Jin, Y. (2016). Social media use during disasters: How information form and source influence intended behavioral responses. <em>Communication Research, 43</em>(5), 626&ndash;646. <a href="https://doi.org/10.1177/0093650214565917" target="_blank" rel="noopener">https://doi.org/10.1177/0093650214565917</a>',
+    annotation: 'Liu, Fraustino, and Jin find that disaster information source significantly influences how publics seek and share crisis information, with social media and government sources producing distinct behavioral intentions. This study supports the comparative analysis of FEMA and ARC by providing empirical evidence for how platform and organizational source affect public engagement during crises — a key empirical grounding for this project\'s cross-organizational comparison.'
+  },
+  {
+    citation: 'Kent, M. L., & Taylor, M. (2002). Toward a dialogic theory of public relations. <em>Public Relations Review</em>, <em>28</em>(1), 21–37. <a href="https://doi.org/10.1016/S0363–8111(02)00108-X" target="_blank" rel="noopener">https://doi.org/10.1016/S0363–8111(02)00108-X</a>',
     annotation: 'Kent and Taylor develop a dialogic model of public relations that emphasizes mutuality, openness, and sustained relationship-building rather than one-way broadcasting. Their framework provides the primary language for analyzing whether FEMA\'s and ARC\'s crisis communication on social media invites meaningful public engagement or primarily projects institutional authority downward to publics.'
   },
   {
@@ -918,7 +928,7 @@ const bibData = [
     annotation: 'Walsh argues that social media should be treated as a rich object for humanistic inquiry and that doing so responsibly demands sustained attention to community engagement, citation ethics, and data sharing, not only to computational methods. This chapter anchors the project more firmly in digital humanities and provides an ethical framework for handling curated post data from living publics.'
   },
   {
-    citation: 'Weller, K. (2015). Accepting the challenges of social media research. <em>Online Information Review</em>, <em>39</em>(3), 281–289. <a href="https://doi.org/10.1108/OIR-03-2015-0069" target="_blank" rel="noopener">https://doi.org/10.1108/OIR-03-2015-0069</a>',
+    citation: 'Weller, K. (2015). Accepting the challenges of social media research. <em>Online Information Review</em>, <em>39</em>(3), 281–289. <a href="https://doi.org/10.1108/OIR-03–2015-0069" target="_blank" rel="noopener">https://doi.org/10.1108/OIR-03–2015-0069</a>',
     annotation: 'Weller discusses the methodological and epistemological challenges of using social media material as scholarly evidence, emphasizing that choices about access, scale, platform, and interpretation are not incidental but constitutive of the meanings researchers can produce. This article reinforces the project\'s argument that decisions about how to collect and analyze crisis posts are themselves arguments about what social media research can and should know.'
   },
   {
